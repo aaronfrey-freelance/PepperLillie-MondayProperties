@@ -16,9 +16,9 @@ use Roots\Sage\Wrapper;
       do_action('get_header');
       get_template_part('templates/header');
     ?>
-    <div class="wrap container" role="document">
+    <div class="wrap container-fluid" role="document">
       <div class="content row">
-        <main class="main" role="main">
+        <main role="main">
           <?php include Wrapper\template_path(); ?>
         </main><!-- /.main -->
         <?php if (Config\display_sidebar()) : ?>
@@ -32,5 +32,24 @@ use Roots\Sage\Wrapper;
       get_template_part('templates/footer');
       wp_footer();
     ?>
+
+    <script type="text/javascript" src="<?php bloginfo('template_url'); ?>/assets/styles/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+    <script src="<?php bloginfo('template_url'); ?>/assets/scripts/jquery.easing.1.3.js"></script>
+    <script src="<?php bloginfo('template_url'); ?>/assets/scripts/jquery.animate-enhanced.min.js"></script>
+    <script src="<?php bloginfo('template_url'); ?>/assets/scripts/jquery.superslides.js" type="text/javascript" charset="utf-8"></script>
+    <script>
+      $('#slides').superslides({
+        animation: 'fade'
+      });
+    </script>
+
+    <script type="text/javascript">
+      $(document).ready(function() {
+        $(".fancybox").fancybox({
+          openEffect  : 'none'
+        });
+      });
+    </script>
+
   </body>
 </html>
