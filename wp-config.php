@@ -14,11 +14,11 @@
  * @package WordPress
  */
 
-define('WP_SITEURL', 'http://' . $_SERVER['SERVER_NAME'] . '/wordpress');
-define('WP_HOME', 'http://' . $_SERVER['SERVER_NAME']);
+define('WP_SITEURL', 'http://' . $_SERVER['SERVER_NAME'] . ':8888/Freelance/PepperLillie-Monday/wordpress');
+define('WP_HOME', 'http://' . $_SERVER['SERVER_NAME'] . ':8888/Freelance/PepperLillie-Monday');
 
 define('WP_CONTENT_DIR', $_SERVER['DOCUMENT_ROOT'] . '/wp-content');
-define('WP_CONTENT_URL', 'http://' . $_SERVER['SERVER_NAME'] . '/wp-content');
+define('WP_CONTENT_URL', 'http://' . $_SERVER['SERVER_NAME'] . ':8888/Freelance/PepperLillie-Monday/wp-content');
 
 define('WP_DEFAULT_THEME', 'monday');
 
