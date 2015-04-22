@@ -14,7 +14,6 @@ use Roots\Sage\Wrapper;
     <![endif]-->
     <?php
       do_action('get_header');
-      get_template_part('templates/header');
     ?>
     <div class="wrap container-fluid" role="document">
       <div class="content row">
@@ -29,26 +28,8 @@ use Roots\Sage\Wrapper;
       </div><!-- /.content -->
     </div><!-- /.wrap -->
     <?php
-      get_template_part('templates/footer');
       wp_footer();
     ?>
-
-    <script src="<?php bloginfo('template_url'); ?>/assets/scripts/jquery.easing.1.3.js"></script>
-    <script src="<?php bloginfo('template_url'); ?>/assets/scripts/jquery.animate-enhanced.min.js"></script>
-    <script src="<?php bloginfo('template_url'); ?>/assets/scripts/jquery.superslides.js" type="text/javascript" charset="utf-8"></script>
-    <script>
-      $('#slides').superslides({
-        animation: 'fade'
-      });
-    </script>
-
-    <script type="text/javascript">
-      $(document).ready(function() {
-        $(".fancybox").fancybox({
-          openEffect  : 'none'
-        });
-      });
-    </script>
 
   </body>
 </html>
