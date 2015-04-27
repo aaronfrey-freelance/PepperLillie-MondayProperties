@@ -149,7 +149,6 @@ body {
     /* Fix for webkit rendering */
     
     -webkit-text-size-adjust: 100%;
-    min-width: 980px;
 }
 
 ol,
@@ -445,20 +444,21 @@ img.scale-with-grid {
     min-height: calc(100% - 390px);
 }
 
-.maincontent h1 {
-    text-transform: uppercase;
-    color: #000;
-    font-size: 36px;
-    font-weight: 700;
-}
-
 .maincontent {
     text-align: left;
-    width: 980px;
     font-size: 16px;
     color: #494a4a;
     padding: 50px 0px 100px 0px;
     letter-spacing: 0.01em;
+    .container {
+        width: 960px;
+    }
+    h1 {
+        text-transform: uppercase;
+        color: #000;
+        font-size: 36px;
+        font-weight: 700;
+    }
 }
 
 .aboutheadline {
@@ -471,8 +471,12 @@ img.scale-with-grid {
     font-weight: 700;
 }
 
+.no-gutter > [class*='col-md-'] {
+    padding-right: 0;
+    padding-left: 0;
+}
+
 .tenantrow {
-    width: 980px;
     border-bottom: inset;
     border-color: #c8c8c9;
     border-width: 1px;
@@ -481,29 +485,24 @@ img.scale-with-grid {
 }
 
 .tenant {
-    width: 25%;
-    float: left;
-    text-align: left;
     color: #494a4a;
     font-size: 13px;
     font-weight: 700;
-}
-
-.tenant a {
-    color: #00a1e4;
-    text-decoration: none;
-    text-transform: uppercase;
-    font-weight: 400;
-    font-size: 12px;
-}
-
-.tenant a:hover {
-    color: #ed1b2f;
+    a {
+        color: #00a1e4;
+        text-decoration: none;
+        text-transform: uppercase;
+        font-weight: 400;
+        font-size: 12px;
+        &:hover {
+            color: #ed1b2f;
+        }
+    }
 }
 
 .tenant img {
     float: left;
-    padding: 0px 20px 20px 0px;
+    margin: 0px 20px 20px 0px;
 }
 
 .contactrow {
@@ -523,7 +522,11 @@ img.scale-with-grid {
 ================================================== */
 /* Smaller than standard 960 (devices and browsers) */
 
-@media only screen and (max-width: 959px) {}
+@media only screen and (max-width: 959px) {
+    .maincontent .container {
+        width: inherit;
+    }
+}
 /* Tablet Portrait size to standard 960 (devices and browsers) */
 
 @media only screen and (min-width: 768px) and (max-width: 959px) {}
@@ -537,12 +540,10 @@ img.scale-with-grid {
     .socialmedia {
         text-align: center;
     }
-
     .socialmedia {
         position: inherit;
         padding-top: 15px;
     }
-
     .headlinecontainer {
         top: 318px;
         width: 100%;
