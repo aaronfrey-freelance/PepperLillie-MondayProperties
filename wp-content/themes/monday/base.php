@@ -37,11 +37,11 @@ use Roots\Sage\Wrapper;
     <script src="<?php bloginfo('template_url'); ?>/assets/scripts/jquery.animate-enhanced.min.js"></script>
     <script src="<?php bloginfo('template_url'); ?>/assets/scripts/jquery.superslides.js" type="text/javascript" charset="utf-8"></script>
     <script>
-      if($('#slides img').length > 1) {
+      // if($('#slides img').length > 1) {
         $('#slides').superslides({
           animation: 'fade'
         });
-      }
+      // }
     </script>
 
   </body>
