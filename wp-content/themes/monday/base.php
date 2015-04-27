@@ -42,13 +42,5 @@ use Roots\Sage\Wrapper;
       });
     </script>
 
-    <script type="text/javascript">
-      $(document).ready(function() {
-        $(".fancybox").fancybox({
-          openEffect  : 'none'
-        });
-      });
-    </script>
-
   </body>
 </html>

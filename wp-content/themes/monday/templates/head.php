@@ -10,7 +10,7 @@
 
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900' rel='stylesheet' type='text/css'>
-    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="shortcut icon" href="<?php bloginfo('template_url'); ?>/dist/images/favicon.ico">
 
     <?php wp_head();?>
 
