@@ -493,11 +493,12 @@ img.scale-with-grid {
             color: #ed1b2f;
         }
     }
-}
-
-.tenant img {
-    float: left;
-    margin: 0px 20px 20px 0px;
+    img {
+        width: 47px;
+        height: 63px;
+        float: left;
+        margin: 0px 20px 20px 0px;
+    }
 }
 
 .contactrow {
@@ -528,15 +529,16 @@ img.scale-with-grid {
 /* All Mobile Sizes (devices and browser) */
 
 @media only screen and (max-width: 767px) {
-    
     .maincontent {
         padding-bottom: 30px;
     }
-
     footer {
         .footertext, .socialmedia {
             text-align: center;
             position: inherit;
+        }
+        .footertext {
+            margin-top: 37px;
         }
         .socialmedia {
             padding: 15px 0 23px 0;
@@ -552,6 +554,18 @@ img.scale-with-grid {
     .tenantrow {
         border-bottom: none;
         padding: 0;
+    }
+    .tenant {
+        .inner-tenant {
+            padding-top: 17px;
+            overflow: auto;
+            border-bottom: inset;
+            border-color: #c8c8c9;
+            border-width: 1px;
+            img {
+                margin-bottom: 15px;
+            }
+        }
     }
 }
 /* Mobile Landscape Size to Tablet Portrait (devices and browsers) */
