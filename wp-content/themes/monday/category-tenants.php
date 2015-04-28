@@ -21,7 +21,9 @@
 
 			</div>
 
-			<?php while (have_posts()) : the_post(); $count = $wp_query->current_post + 1; ?>
+			<?php global $query_string; query_posts( $query_string . '&orderby=title&order=ASC' ); ?>
+
+			<?php if (have_posts()) : while (have_posts()) : the_post(); $count = $wp_query->current_post + 1; ?>
 
 			<?php if($count % 4 === 1) : ?>
 			<div class="row tenantrow">
@@ -45,7 +47,7 @@
 			</div>
 			<?php endif; ?>
 
-			<?php endwhile; ?>
+			<?php endwhile; endif; ?>
 
 		</div>
 
