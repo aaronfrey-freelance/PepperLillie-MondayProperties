@@ -529,8 +529,12 @@ img.scale-with-grid {
 /* All Mobile Sizes (devices and browser) */
 
 @media only screen and (max-width: 767px) {
-    .maincontent {
-        padding-bottom: 30px;
+    .mainwhite {
+        background-color: white;
+        top: 287px;
+        .maincontent {
+            padding: 30px inherit;
+        }
     }
     footer {
         .footertext, .socialmedia {
@@ -566,6 +570,25 @@ img.scale-with-grid {
                 margin-bottom: 15px;
             }
         }
+    }
+    .navbar-default {
+        .navbar-header {
+            height: 104px;
+            background: #000;
+            .navbar-brand {
+                margin-top: 15px;
+                img {
+                    width: 120px;
+                }
+            }
+            .icon-bar {
+                height: 4px;
+            }
+        }
+    }
+    .mobile-image-header {
+        position: absolute;
+        top: 104px;
     }
 }
 /* Mobile Landscape Size to Tablet Portrait (devices and browsers) */

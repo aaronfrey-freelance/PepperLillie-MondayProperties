@@ -9,7 +9,9 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="<?= esc_url(home_url('/')); ?>"></a>
+      <a class="hide-xs navbar-brand" href="<?= esc_url(home_url('/')); ?>">
+        <img src="<?php bloginfo('template_url'); ?>/dist/images/logo.png">
+      </a>
     </div>
 
     <nav class="collapse navbar-collapse" role="navigation">

@@ -1,9 +1,11 @@
-<div id="slides">
+<div id="slides" class="hidden-xs">
 	<ul class="slides-container">    
 		<li><img src="<?php bloginfo('template_url'); ?>/dist/images/tenants.jpg"></li>
 		<li><img src="<?php bloginfo('template_url'); ?>/dist/images/tenants.jpg"></li>
 	</ul>
 </div>
+
+<img class="mobile-image-header img-responsive visible-xs" src="<?php bloginfo('template_url'); ?>/dist/images/tenants.jpg">
 
 <div class="mainwhite" align="center">
 
@@ -36,7 +38,7 @@
 						<div><?php the_title(); ?></div>
 						<a href="<?php the_field('property_handbook_link'); ?>" target="_blank"> > TENANT HANDBOOK</a>
 					</div>
-					
+
 				</div>
 			
 			<?php if($count % 4 === 0) : ?>
