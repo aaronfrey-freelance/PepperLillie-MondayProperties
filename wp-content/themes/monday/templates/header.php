@@ -15,6 +15,14 @@
     </div>
 
     <nav class="collapse navbar-collapse" role="navigation">
+
+      <div class="mobile-navbar-collpase">
+        <img src="<?php bloginfo('template_url'); ?>/dist/images/logo2.png">
+        <a href="#" class="mobile-nav-close" id="mobile-nav-close">
+          <i class="fa fa-3x fa-close"></i>
+        </a>
+      </div>
+
       <?php
       if (has_nav_menu('primary_navigation')) :
         wp_nav_menu(['theme_location' => 'primary_navigation', 'walker' => new NavWalker(), 'menu_class' => 'nav navbar-nav']);

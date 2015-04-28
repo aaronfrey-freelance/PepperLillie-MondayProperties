@@ -24,6 +24,13 @@ use Roots\Sage\Wrapper;
     <script src="<?php bloginfo('template_url'); ?>/assets/scripts/jquery.animate-enhanced.min.js"></script>
     <script src="<?php bloginfo('template_url'); ?>/assets/scripts/jquery.superslides.js" type="text/javascript" charset="utf-8"></script>
     <script>
+
+      $(function() {
+        $(document).on('click', '#mobile-nav-close', function() {
+          $('.navbar-collapse').collapse('hide');
+        });
+      });
+
       if($('#slides img').length > 1) {
         $('#slides').superslides({
           animation: 'fade'
