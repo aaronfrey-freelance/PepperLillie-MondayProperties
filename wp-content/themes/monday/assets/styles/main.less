@@ -471,11 +471,6 @@ img.scale-with-grid {
     font-weight: 700;
 }
 
-.no-gutter > [class*='col-md-'] {
-    padding-right: 0;
-    padding-left: 0;
-}
-
 .tenantrow {
     border-bottom: inset;
     border-color: #c8c8c9;
@@ -533,16 +528,19 @@ img.scale-with-grid {
 /* All Mobile Sizes (devices and browser) */
 
 @media only screen and (max-width: 767px) {
+    
+    .maincontent {
+        padding-bottom: 30px;
+    }
+
     footer {
-        bottom: 23px;
-    }
-    .footertext,
-    .socialmedia {
-        text-align: center;
-    }
-    .socialmedia {
-        position: inherit;
-        padding-top: 15px;
+        .footertext, .socialmedia {
+            text-align: center;
+            position: inherit;
+        }
+        .socialmedia {
+            padding: 15px 0 23px 0;
+        }
     }
     .headlinecontainer {
         top: 318px;
@@ -550,6 +548,10 @@ img.scale-with-grid {
         padding: 33px 25px 30px 25px;
         font-size: 21.72px;
         line-height: 28.93px;
+    }
+    .tenantrow {
+        border-bottom: none;
+        padding: 0;
     }
 }
 /* Mobile Landscape Size to Tablet Portrait (devices and browsers) */
