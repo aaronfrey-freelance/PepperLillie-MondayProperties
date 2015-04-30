@@ -1,4 +1,60 @@
 /**
+ * Contact
+ */
+.location-map {
+    position: relative;
+    a.view-larger {
+        font-family: Roboto,Arial;
+        font-size: 12px;
+        font-weight: 500;
+        line-height: 14px;
+        color: #3a84df;
+        text-decoration: none;
+        z-index: 1;
+        position: absolute;
+        top: 0;
+        left: 0;
+        margin: 10px;
+        padding: 1px;
+        box-shadow: rgba(0, 0, 0, 0.298039) 0px 1px 4px -1px;
+        border-radius: 2px;
+        background-color: white;
+        &:hover {
+            text-decoration: underline;
+        }
+        div {
+            padding: 5px 14px 5px 14px;
+        }
+    }
+}
+
+/**
+ * Team
+ */
+.team-member {
+    position: relative;
+    //padding: 0 30px 0 0;
+    margin-bottom: 30px;
+    text-decoration: none;
+    img {
+        width: 100%;
+        height: auto;
+        vertical-align: bottom;
+    }
+    .team-title {
+        position: absolute;
+        bottom: 0;
+        left: 15px;
+        right: 15px;
+        height: 57px;
+        background-color: #999;
+        color: #fff;
+        font-size: 19px;
+        line-height: 54px;
+    }
+}
+
+/**
  * Investors
  */
 body.page-investors {
@@ -25,7 +81,7 @@ body.page-investors {
                 }
             }
             label {
-            	display: inline;
+                display: inline;
             }
             input[type='text'], input[type='password'] {
                 width: 100%;
