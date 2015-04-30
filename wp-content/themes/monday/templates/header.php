@@ -16,7 +16,7 @@
 
     <nav class="collapse navbar-collapse" role="navigation">
 
-      <div class="mobile-navbar-collpase">
+      <div class="visible-xs hide-sm mobile-navbar-collpase">
         <img src="<?php bloginfo('template_url'); ?>/dist/images/logo2.png">
         <a href="#" class="mobile-nav-close" id="mobile-nav-close">
           <i class="fa fa-3x fa-close"></i>

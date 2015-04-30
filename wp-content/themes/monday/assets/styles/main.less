@@ -262,20 +262,6 @@ small {
 }
 /*  Blockquotes  */
 
-blockquote,
-blockquote p {
-    font-size: 17px;
-    line-height: 24px;
-    color: #777;
-    font-style: italic;
-}
-
-blockquote {
-    margin: 0 0 20px;
-    padding: 9px 20px 0 19px;
-    border-left: 1px solid #ddd;
-}
-
 blockquote cite {
     display: block;
     font-size: 12px;
@@ -461,7 +447,7 @@ img.scale-with-grid {
     }
 }
 
-.aboutheadline {
+blockquote {
     font-size: 22px;
     line-height: 35px;
     font-style: italic;
@@ -528,13 +514,28 @@ img.scale-with-grid {
 @media only screen and (min-width: 768px) and (max-width: 959px) {}
 /* All Mobile Sizes (devices and browser) */
 
-@media only screen and (max-width: 767px) {
+@media only screen and (max-width: 767px) {}
+/* Mobile Landscape Size to Tablet Portrait (devices and browsers) */
+
+@media only screen and (min-width: 480px) and (max-width: 767px) {}
+/* Mobile Portrait Size to Mobile Landscape Size (devices and browsers) */
+
+@media only screen and (max-width: 479px) {
+    blockquote {
+        width: 100%;
+        padding: 0 0 25px 0;
+    }
     .mainwhite {
         background-color: white;
         top: 287px;
+        position: inherit;
         .maincontent {
             padding: 30px inherit;
         }
+    }
+    .home footer {
+        position: absolute;
+        width: 100%;
     }
     footer {
         .footertext, .socialmedia {
@@ -572,6 +573,8 @@ img.scale-with-grid {
         }
     }
     .navbar-default {
+        position: inherit;
+        border: none;
         .navbar-header {
             height: 104px;
             background: #000;
@@ -625,17 +628,7 @@ img.scale-with-grid {
             }
         }
     }
-    .mobile-image-header {
-        position: absolute;
-        top: 104px;
-    }
 }
-/* Mobile Landscape Size to Tablet Portrait (devices and browsers) */
-
-@media only screen and (min-width: 480px) and (max-width: 767px) {}
-/* Mobile Portrait Size to Mobile Landscape Size (devices and browsers) */
-
-@media only screen and (max-width: 479px) {}
 /* #Font-Face
 ================================================== */
 /*  This is the proper syntax for an @font-face file
