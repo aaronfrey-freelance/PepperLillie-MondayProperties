@@ -5,15 +5,18 @@
 	</div>
 
 	<div class="socialmedia">
-		<a href="https://www.facebook.com/MondayProperties" target="_blank">
-			<i class="fa fa-facebook"></i>
+
+	<?php
+
+	$term = get_term_by('slug', 'social-links', 'nav_menu');
+	$items = wp_get_nav_menu_items($term->term_id);
+
+	foreach ($items as $key => $menuitem) : ?>
+		<a href="<?php echo $menuitem->url; ?>" target="_blank">
+			<i class="<?php echo implode(' ', $menuitem->classes) ?>"></i>
 		</a>
-		<a href="https://www.linkedin.com/company/monday-properties" target="_blank">
-			<i class="fa fa-linkedin-square"></i>
-		</a>
-		<a href="https://twitter.com/mondayre" target="_blank">
-			<i class="fa fa-twitter"></i>
-		</a>
+	<?php endforeach; ?>
+
 	</div>
 
 	<?php dynamic_sidebar('sidebar-footer');?>
