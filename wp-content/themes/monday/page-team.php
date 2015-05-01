@@ -30,7 +30,7 @@
 
 			</div>
 
-			<div class="container">
+			<div class="container team-container">
 
 				<div class="row">
 
@@ -56,7 +56,6 @@
 							</div>
 						</a>
 
-
 						<a
 							href="<?php the_permalink(); ?>"
 							class="team-member col-sm-3 col-xs-6">
@@ -69,7 +68,6 @@
 								<?php the_title(); ?>
 							</div>
 						</a>
-
 
 						<a
 							href="<?php the_permalink(); ?>"

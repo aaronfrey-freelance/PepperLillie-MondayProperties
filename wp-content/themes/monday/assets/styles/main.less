@@ -440,9 +440,6 @@ img.scale-with-grid {
     color: #494a4a;
     padding: 50px 0px 100px 0px;
     letter-spacing: 0.01em;
-    .container {
-        width: 960px;
-    }
     h1 {
         text-transform: uppercase;
         color: #000;
@@ -501,11 +498,7 @@ blockquote {
 ================================================== */
 /* Smaller than standard 960 (devices and browsers) */
 
-@media only screen and (max-width: 959px) {
-    .maincontent .container {
-        width: inherit;
-    }
-}
+@media only screen and (max-width: 959px) {}
 /* Tablet Portrait size to standard 960 (devices and browsers) */
 
 @media only screen and (min-width: 768px) and (max-width: 959px) {}
@@ -524,10 +517,9 @@ blockquote {
     }
     .mainwhite {
         background-color: white;
-        top: 287px;
-        position: inherit;
+        margin-top: -75px;
         .maincontent {
-            padding: 30px inherit;
+            padding: 20px 0 0 0;
         }
     }
     .home footer {
@@ -538,9 +530,6 @@ blockquote {
         .footertext, .socialmedia {
             text-align: center;
             position: inherit;
-        }
-        .footertext {
-            margin-top: 37px;
         }
         .socialmedia {
             padding: 15px 0 23px 0;
@@ -569,10 +558,13 @@ blockquote {
             }
         }
     }
-    .team-member {
-        .team-title {
-            height: 47px;
-            line-height: 44px;
+    .team-container {
+        padding: 0;
+        .team-member {
+            .team-title {
+                height: 47px;
+                line-height: 44px;
+            }
         }
     }
     .navbar-default {
@@ -596,6 +588,7 @@ blockquote {
             background: #fff;
             padding: 0;
             position: absolute;
+            z-index: 100;
             left: 0;
             right: 0;
             top: 0;
