@@ -31,11 +31,10 @@ use Roots\Sage\Wrapper;
         });
       });
 
-      if($('#slides img').length > 1) {
-        $('#slides').superslides({
-          animation: 'fade'
-        });
-      }
+      $('#slides').superslides({
+        animation: 'fade'
+      });
+
     </script>
 
   </body>

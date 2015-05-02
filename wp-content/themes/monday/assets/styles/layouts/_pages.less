@@ -33,7 +33,6 @@
  */
 .team-member {
     position: relative;
-    //padding: 0 30px 0 0;
     margin-bottom: 30px;
     text-decoration: none;
     img {
@@ -51,6 +50,48 @@
         color: #fff;
         font-size: 19px;
         line-height: 54px;
+    }
+    &:hover {
+        img {
+            outline: 4px solid #00a1e4;
+        }
+        .team-title {
+            background-color: #00a1e4;
+        }
+    }
+}
+
+.team-single {
+    p {
+        line-height: 24px;
+    }
+    .job-title {
+        font-style: italic;
+    }
+    img {
+        width: 100%;
+        height: auto;
+    }
+    .btn {
+        padding: 10px;
+        font-weight: bold;
+        margin: 10px 0 30px 0;
+        text-transform: uppercase;
+        text-decoration: none;
+        font-size: 14px;
+        border-radius: 0;
+        &.back {
+            color: #00a1e4;
+        }
+        &.v-card {
+            text-align: left;
+            background-color: #14516a;
+            color: #fff;
+            i {
+                font-weight: bold;
+                font-size: 23px;
+            }
+        }
     }
 }
 
