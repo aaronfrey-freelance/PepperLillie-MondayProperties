@@ -27,11 +27,14 @@
 									<a href="<?php bloginfo('url'); ?>/about">Overview</a>
 								</li>
 								<li role="presentation">
-									<?php $postslist = get_posts('category=7&numberposts=1&order=DESC&orderby=post_date');
-									     foreach ($postslist as $post) :
-									     setup_postdata($post); ?>
-									   <a href="<?php the_permalink() ?>">Case Studies</a>
-									<?php endforeach; ?>
+									<?php $args = array(
+										'numberposts'   => 1,
+										'category'    => 7,
+									);
+									$posts_array = get_posts( $args );
+									foreach ($posts_array as $post) : setup_postdata( $post ); ?>
+										<a href="<?php the_permalink() ?>">Case Studies</a>
+									<?php endforeach; wp_reset_postdata(); ?>
 								</li>
 							</ul>
 
