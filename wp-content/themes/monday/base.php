@@ -19,25 +19,24 @@ use Roots\Sage\Wrapper;
         <?php include Wrapper\template_path(); ?>
       </div><!-- /.content -->
     </div><!-- /.wrap -->
-
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    
     <script src="<?php bloginfo('template_url'); ?>/assets/scripts/image-scale.min.js" type="text/javascript"></script>
     <script src="<?php bloginfo('template_url'); ?>/assets/scripts/jquery.easing.1.3.js"></script>
     <script src="<?php bloginfo('template_url'); ?>/assets/scripts/jquery.animate-enhanced.min.js"></script>
     <script src="<?php bloginfo('template_url'); ?>/assets/scripts/jquery.superslides.js" type="text/javascript" charset="utf-8"></script>
     <script>
 
-      function equalCols() {
-        if($(window).width() > 479) {
-          $('.case-image').height($('.case-description-col').height());
-          $('.image-pagination').css('top', 0);
-        } else {
-          $('.case-image').height('auto');
-          $('.image-pagination').css('top', $('.case-image img').height());
-        }
-      }
+      jQuery(document).ready(function($) {
 
-      $(function() {
+        function equalCols() {
+          if($(window).width() > 479) {
+            $('.case-image').height($('.case-description-col').height());
+            $('.image-pagination').css('top', 0);
+          } else {
+            $('.case-image').height('auto');
+            $('.image-pagination').css('top', $('.case-image img').height());
+          }
+        }
 
         var caseStudy = $('.ngg-casestudy .case-study').first();
         var csHeight = $(caseStudy).height();
@@ -84,7 +83,9 @@ use Roots\Sage\Wrapper;
         });
       });
 
+
     </script>
 
   </body>
+
 </html>
