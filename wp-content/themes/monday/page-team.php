@@ -56,58 +56,6 @@
 							</div>
 						</a>
 
-						<a
-							href="<?php the_permalink(); ?>"
-							class="team-member col-sm-3 col-xs-6">
-							<?php 
-							if ( has_post_thumbnail() ) {
-								the_post_thumbnail();
-							} 
-							?>
-							<div class="team-title text-center">
-								<?php the_title(); ?>
-							</div>
-						</a>
-
-						<a
-							href="<?php the_permalink(); ?>"
-							class="team-member col-sm-3 col-xs-6">
-							<?php 
-							if ( has_post_thumbnail() ) {
-								the_post_thumbnail();
-							} 
-							?>
-							<div class="team-title text-center">
-								<?php the_title(); ?>
-							</div>
-						</a>
-
-						<a
-							href="<?php the_permalink(); ?>"
-							class="team-member col-sm-3 col-xs-6">
-							<?php 
-							if ( has_post_thumbnail() ) {
-								the_post_thumbnail();
-							} 
-							?>
-							<div class="team-title text-center">
-								<?php the_title(); ?>
-							</div>
-						</a>
-
-						<a
-							href="<?php the_permalink(); ?>"
-							class="team-member col-sm-3 col-xs-6">
-							<?php 
-							if ( has_post_thumbnail() ) {
-								the_post_thumbnail();
-							} 
-							?>
-							<div class="team-title text-center">
-								<?php the_title(); ?>
-							</div>
-						</a>
-
 					<?php endforeach; wp_reset_postdata(); ?>
 
 				</div>
