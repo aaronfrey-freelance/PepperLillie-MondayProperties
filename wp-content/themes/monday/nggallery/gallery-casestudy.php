@@ -21,7 +21,7 @@ Follow variables are useable :
  		<?php $counter = 0; ?>
  		<?php foreach ( $images as $idx => $image ) : ?>
 			<?php if ( !$image->hidden ) : $counter++; ?>
-			<a href="#" class="text-center"><?php echo $counter; ?></a>
+			<a href="#" class="text-center <?php echo $idx === 0 ? 'active' : ''?>"><?php echo $counter; ?></a>
 			<?php endif; ?>
  		<?php endforeach; ?>
  	</div>
@@ -29,9 +29,7 @@ Follow variables are useable :
 	<!-- Thumbnails -->
 	<?php foreach ( $images as $idx => $image ) : ?>
 
-	<?php if ($idx === 0) : ?>
-
-	<div class="row">
+	<div class="row case-study">
 	
 		<div class="col-sm-6 case-image">	
 
@@ -56,8 +54,6 @@ Follow variables are useable :
 		</div>
 
 	</div>
-
-	<?php endif; ?>
 
  	<?php endforeach; ?>
  	

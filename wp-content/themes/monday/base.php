@@ -28,18 +28,50 @@ use Roots\Sage\Wrapper;
     <script>
 
       function equalCols() {
-        $('.case-image').height($('.case-description-col').height());
+        if($(window).width() > 479) {
+          $('.case-image').height($('.case-description-col').height());
+          $('.image-pagination').css('top', 0);
+        } else {
+          $('.case-image').height('auto');
+          $('.image-pagination').css('top', $('.case-image img').height());
+        }
       }
 
       $(function() {
+
+        var caseStudy = $('.ngg-casestudy .case-study').first();
+        var csHeight = $(caseStudy).height();
+        $('.ngg-casestudy').height(csHeight);
+        $(caseStudy).css('visibility', 'visible').addClass('active');
+
+        $('.image-pagination a').on('click', function(e) {
+          e.preventDefault();
+          $('.image-pagination a').removeClass('active');
+          $(this).addClass('active');
+          
+          var idx = parseInt($(this).text()) - 1;
+          caseStudy = $('.ngg-casestudy .case-study')
+            .removeClass('active')
+            .css('visibility', 'hidden')
+            .eq(idx);
+          var csHeight = $(caseStudy).height();
+
+          $('.ngg-casestudy').height(csHeight);
+          $(caseStudy).css('visibility', 'visible')
+            .addClass('active')
+            .find('img')
+            .imageScale('scale');
+        });
 
         equalCols();
 
         $( window ).resize(function() {
           equalCols();
+          $('.ngg-casestudy').height($('.case-study.active').height());
         });
 
         $("img.scale").imageScale({
+          fadeInDuration: 1000,
           rescaleOnResize: true
         });
 

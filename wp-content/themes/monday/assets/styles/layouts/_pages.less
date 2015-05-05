@@ -58,7 +58,14 @@
  */
 
 .ngg-casestudy {
+    clear: both;
     position: relative;
+    .case-study {
+        visibility: hidden;
+        position: absolute;
+        right: 0;
+        left: 0;
+    }
     .image-pagination {
         margin-right: -15px;
         z-index: 1;
@@ -67,22 +74,20 @@
         top: 0;
         a {
             display: inline-block;
-            background-color: #9cc5d6;
+            background-color: #83acbd;
+            opacity: 0.8;
             height: 31px;
             min-width: 31px;
             line-height: 31px;
             text-decoration: none;
             &.active, &:hover {
-                background-color: #83acbd;
+                opacity: 1;
             }
         }
     }
     .row {
         .case-image {
             padding: 0;
-            img {
-                position: relative !important;
-            }
         }
         .case-description {
             padding: 0 47px;
