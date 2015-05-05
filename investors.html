@@ -1,10 +1,42 @@
-<?php while (have_posts()) : the_post(); ?>
-	
-	<?php get_template_part('templates/content', 'page'); ?>
+<style type="text/css">
+  .investormain {
+    min-width: 0;
+    color: #000;
+    text-align: center;
+  }
+  .headline {
+    font-size: 21px !important;
+    color: #486ca6 !important;
+    font-weight: 700 !important;
+    font-family: 'Lato', sans-serif !important;
+  }
+  form {
+    font-size: 12px;
+    font-family: 'Lato', sans-serif;
+    text-align: left;
+    width: 300px;
+    margin: 0 auto;
+  }
+  a {
+      color: #486ca6;
+      text-decoration: none;
+  }
+  a:hover {
+    color: #000;
+  }
+  label {
+      display: inline;
+  }
+  input[type='text'],
+  input[type='password'] {
+      width: 100%;
+  }
+  input[type='submit'] {
+      float: right;
+  }
+</style>
 
-<?php endwhile; ?>
-
-<!-- <div class="investormain text-center">
+<div class="investormain text-center">
 	
 	<a href="//localhost:3000/Freelance/PepperLillie-Monday/wp-content/uploads/2015/04/logo.jpg">
 		<img src="//localhost:3000/Freelance/PepperLillie-Monday/wp-content/uploads/2015/04/logo.jpg" alt="Logo" width="256" height="180" class="aligncenter size-full wp-image-33" />
@@ -38,4 +70,4 @@
 
 	</form>
 
-</div> -->
+</div>

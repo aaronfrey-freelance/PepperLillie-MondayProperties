@@ -24,9 +24,19 @@ use Roots\Sage\Wrapper;
     <script src="<?php bloginfo('template_url'); ?>/assets/scripts/jquery.easing.1.3.js"></script>
     <script src="<?php bloginfo('template_url'); ?>/assets/scripts/jquery.animate-enhanced.min.js"></script>
     <script src="<?php bloginfo('template_url'); ?>/assets/scripts/jquery.superslides.js" type="text/javascript" charset="utf-8"></script>
+    <script src="<?php bloginfo('template_url'); ?>/assets/scripts/fancybox/jquery.fancybox.pack.js?v=2.1.5" type="text/javascript"></script>
     <script>
 
       jQuery(document).ready(function($) {
+
+        $('.fancybox.iframe').on('click', function(e) {
+          e.preventDefault();
+          $.fancybox.open({
+              padding : 0,
+              href:'<?php echo get_home_url(); ?>/investors.html',
+              type: 'iframe'
+          });
+        });
 
         function equalCols() {
           if($(window).width() > 479) {
