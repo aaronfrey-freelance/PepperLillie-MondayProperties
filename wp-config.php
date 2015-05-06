@@ -42,6 +42,8 @@
  * @author     Studio 24 Ltd  <info@studio24.net>
  */
 
+define('ALLOW_UNFILTERED_UPLOADS', true);
+
 // Try environment variable 'WP_ENV'
 if (getenv('WP_ENV') !== false) {
     // Filter non-alphabetical characters for security

@@ -17,12 +17,16 @@
 					<?php 
 					if ( has_post_thumbnail() ) {
 						the_post_thumbnail();
-					} 
+					}
 					?>
-					<a class="btn btn-default btn-block v-card">
+
+					<?php if(get_field('vcard')) : ?>
+					<a href="<?php the_field('vcard'); ?>" class="btn btn-default btn-block v-card">
 						Download v-card
 						<i class="pull-right fa fa-angle-down"></i>
 					</a>
+					<?php endif; ?>
+
 				</div>
 
 				<div class="col-sm-8">
