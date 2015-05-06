@@ -1,13 +1,10 @@
 <?php while (have_posts()) : the_post(); ?>
- 
-	<div id="slides" class="hidden-xs">
-		<ul class="slides-container">    
-			<li><img src="<?php bloginfo('template_url'); ?>/dist/images/about.jpg"></li>
-			<li><img src="<?php bloginfo('template_url'); ?>/dist/images/about.jpg"></li>
-		</ul>
-	</div>
 
-	<img class="mobile-image-header img-responsive visible-xs" src="<?php bloginfo('template_url'); ?>/dist/images/about.jpg">
+	<?php 
+	if ( has_post_thumbnail() ) {
+		the_post_thumbnail('full', ['class' => 'img-responsive']);
+	} 
+	?>
 
 	<div class="mainwhite" align="center">
 
@@ -36,10 +33,7 @@
 
 					<?php $args = array(
 						'posts_per_page'   => 100,
-						'offset'           => 0,
-						'category_name'    => 'team',
-						//'orderby'          => 'post_date',
-						//'order'            => 'DESC'
+						'category_name'    => 'team'
 					);
 					$posts_array = get_posts( $args );
 					foreach ($posts_array as $post) : setup_postdata( $post ); ?>

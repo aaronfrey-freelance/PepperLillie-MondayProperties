@@ -1,13 +1,6 @@
 <?php while (have_posts()) : the_post(); ?>
 
-<div id="slides" class="hidden-xs">
-	<ul class="slides-container">    
-		<li><img src="<?php bloginfo('template_url'); ?>/dist/images/tenants.jpg"></li>
-		<li><img src="<?php bloginfo('template_url'); ?>/dist/images/tenants.jpg"></li>
-	</ul>
-</div>
-
-<img class="mobile-image-header img-responsive visible-xs" src="<?php bloginfo('template_url'); ?>/dist/images/tenants.jpg">
+<?php cfi_featured_image( array('size' => 'full', 'class' => 'img-responsive', 'cat_id' => '4')); ?>
 
 <div class="mainwhite team-single" align="center">
 

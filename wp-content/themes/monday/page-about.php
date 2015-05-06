@@ -1,13 +1,10 @@
 <?php while (have_posts()) : the_post(); ?>
  
-	<div id="slides" class="hidden-xs">
-		<ul class="slides-container">    
-			<li><img src="<?php bloginfo('template_url'); ?>/dist/images/about.jpg"></li>
-			<li><img src="<?php bloginfo('template_url'); ?>/dist/images/about.jpg"></li>
-		</ul>
-	</div>
-
-	<img class="mobile-image-header img-responsive visible-xs" src="<?php bloginfo('template_url'); ?>/dist/images/about.jpg">
+	<?php 
+	if ( has_post_thumbnail() ) {
+		the_post_thumbnail('full', ['class' => 'img-responsive']);
+	} 
+	?>
 
 	<div class="mainwhite" align="center">
 
