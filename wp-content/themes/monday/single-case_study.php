@@ -1,13 +1,6 @@
 <?php while (have_posts()) : the_post(); $postid = get_the_ID(); ?>
  
-	<div id="slides" class="hidden-xs">
-		<ul class="slides-container">    
-			<li><img src="<?php bloginfo('template_url'); ?>/dist/images/about.jpg"></li>
-			<li><img src="<?php bloginfo('template_url'); ?>/dist/images/about.jpg"></li>
-		</ul>
-	</div>
-
-	<img class="mobile-image-header img-responsive visible-xs" src="<?php bloginfo('template_url'); ?>/dist/images/about.jpg">
+	<?php cfi_featured_image( array('size' => 'full', 'class' => 'img-responsive', 'cat_id' => '7')); ?>
 
 	<div class="mainwhite" align="center">
 
