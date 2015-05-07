@@ -13,6 +13,10 @@
     <link rel="shortcut icon" href="<?php bloginfo('template_url'); ?>/dist/images/favicon.ico">
     <link rel="stylesheet" href="<?php bloginfo('template_url'); ?>/assets/scripts/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
 
+    <script type="text/javascript">
+      window.home_url = '<?php echo get_home_url(); ?>';
+    </script>
+
     <?php wp_head();?>
 
   </head>
