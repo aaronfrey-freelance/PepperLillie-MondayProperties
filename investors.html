@@ -1,8 +1,12 @@
 <style type="text/css">
   .investormain {
-    min-width: 0;
     color: #000;
     text-align: center;
+  }
+  .formarea {
+    text-align: left;
+    width: 215px;
+    margin: 0 auto;
   }
   .headline {
     font-size: 21px !important;
@@ -10,12 +14,9 @@
     font-weight: 700 !important;
     font-family: 'Lato', sans-serif !important;
   }
-  form {
+  form, label, b, a {
     font-size: 12px;
     font-family: 'Lato', sans-serif;
-    text-align: left;
-    width: 300px;
-    margin: 0 auto;
   }
   a {
       color: #486ca6;
@@ -36,43 +37,74 @@
   }
 
   @media only screen and (max-width: 479px) {
-    form {
+    .formarea {
       width: 200px;
     }
   }
 
 </style>
 
-<div class="investormain text-center">
-	
-	<img src="logo2.png" alt="Logo" class="aligncenter" />
-	
-	<p class="headline">Investor Log-In</p>
+<div class="investormain">
 
-	<form>
+  <img src="logo2.png" class="aligncenter">
 
-		<p>Please log-in.</p>
+  <div class="headline">Investor Log-In</div>
 
-		<div class="form-group">
-    		<label for="username">Username:</label>
-    		<input type="text" class="form-control" id="username">
-  		</div>
+  <br><br><br>
 
-		<div class="form-group">
-    		<label for="password">Password:</label>
-    		<input type="password" class="form-control" id="password">
-  		</div>
+  <div>
 
-  		<div class="checkbox">
-    		<label>
-      			<input name="remember" type="checkbox"> Remember me
-    		</label>
-  		</div>
+    <div class="formarea">
+      
+      <b>Please log-in.</b>
 
-  		<input class="btn btn-default" type="submit" value="Log-In" />
+      <form name="f1" action="/page.cfm?pageID=10" method="post">
 
-  		<a href="#">Forgot your password?</a>
+        <input type="hidden" name="redirecturl" value="/page.cfm?pageID=10">
 
-	</form>
+        <table class="std">
 
+          <tbody>
+            <tr>
+              <td>
+                <label for="username">Username:</label>
+              </td>
+              <td>
+                <input type="text" name="username" id="username" value="" size="20" autocomplete="off">
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                <label for="password">Password:</label>
+              </td>
+              <td>
+                <input type="password" name="password" id="password" value="" size="20" autocomplete="off">
+              </td>
+            </tr>
+
+            <tr>
+              <td colspan="2">
+                <input type="checkbox" name="rememberMe" id="rememberMe" value="Yes">
+                <label for="rememberMe">Remember Me</label>
+              </td>
+            </tr>
+
+            <tr><td colspan="2" align="right"><input type="submit" value="Log-In"></td></tr>
+
+          </tbody>
+
+        </table>
+
+        <input type="hidden" name="doit" value="Y">
+
+      </form>
+
+      <p class="std"><a href="/page.cfm?pageID=20">Forgot password?</a></p>
+
+    </div>
+
+  </div>
+  
 </div>
+
