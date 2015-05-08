@@ -19,7 +19,7 @@
 
 						<div class="nav-container">
 
-							<ul class="hidden-xs nav nav-tabs sub-nav">
+							<ul class="hidden hidden-xs nav nav-tabs sub-nav">
 								<li role="presentation" class="active">
 									<a href="<?php bloginfo('url'); ?>/about">Overview</a>
 								</li>
