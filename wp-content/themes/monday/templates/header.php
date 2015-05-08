@@ -21,7 +21,7 @@
           <img src="<?php bloginfo('template_url'); ?>/dist/images/logo2.png">
         </a>
         <a href="#" class="mobile-nav-close" id="mobile-nav-close">
-          <i class="fa fa-3x fa-close"></i>
+          <i class="fancybox-item fancybox-close"></i>
         </a>
       </div>
 

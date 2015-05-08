@@ -30,9 +30,9 @@
 				</div>
 
 				<div class="col-sm-8">
-					<a href="<?php bloginfo('url'); ?>/team" class="hidden-xs btn btn-default back pull-right">>Back to all team members</a>
+					<a href="<?php bloginfo('url'); ?>/team" class="hidden-xs btn btn-default back pull-right">> Back to all team members</a>
 					<div class="clearfix"><?php echo the_content(); ?></div>
-					<a href="<?php bloginfo('url'); ?>/team" class="visible-xs btn btn-default btn-block back pull-right">>Back to all team members</a>
+					<a href="<?php bloginfo('url'); ?>/team" class="visible-xs btn btn-default btn-block back pull-right">> Back to all team members</a>
 				</div>
 
 			</div>
