@@ -14,81 +14,79 @@
  * @package WordPress
  */
 
+define('WP_DEFAULT_THEME', 'monday');
+
+define('WP_SITEURL', 'http://' . $_SERVER['SERVER_NAME'] . ':8888/Freelance/PepperLillie-Monday');
+define('WP_HOME', 'http://' . $_SERVER['SERVER_NAME'] . ':8888/Freelance/PepperLillie-Monday');
+
+define('WP_CONTENT_DIR', $_SERVER['DOCUMENT_ROOT'] . '/Freelance/PepperLillie-Monday/wp-content');
+define('WP_CONTENT_URL', 'http://' . $_SERVER['SERVER_NAME'] . ':8888/Freelance/PepperLillie-Monday/wp-content');
+
+// ** MySQL settings - You can get this info from your web host ** //
+/** The name of the database for WordPress */
+define('DB_NAME', 'monday');
+
+/** MySQL database username */
+define('DB_USER', 'root');
+
+/** MySQL database password */
+define('DB_PASSWORD', 'root');
+
+/** MySQL hostname */
+define('DB_HOST', 'localhost');
+
+/** Database Charset to use in creating database tables. */
+define('DB_CHARSET', 'utf8');
+
+/** The Database Collate type. Don't change this if in doubt. */
+define('DB_COLLATE', '');
+
+/**#@+
+ * Authentication Unique Keys and Salts.
+ *
+ * Change these to different unique phrases!
+ * You can generate these using the {@link https://api.wordpress.org/secret-key/1.1/salt/ WordPress.org secret-key service}
+ * You can change these at any point in time to invalidate all existing cookies. This will force all users to have to log in again.
+ *
+ * @since 2.6.0
+ */
+define('AUTH_KEY',         'pkLs+E(ta5H:&9&|-=Zz<8>qG<fOl!j(DFJZC#Ry_^c@cq;-1}h&rX<UQkR&~4@L');
+define('SECURE_AUTH_KEY',  'VSv|hGW^A}Tzm$f%#^gg|D.TaBV~NG_m:|%}D{$|6XX!%f|9}S4Sj@ZAz2xgMo$#');
+define('LOGGED_IN_KEY',    '9@R/tD@TZ%PeiQ+@(rs/~go8&JQsnNwgE&3 T|l(bq82{/B3YEhRa{:]e4(l>j]Q');
+define('NONCE_KEY',        'n|{0?C+xVg`^i^^X*in3/Xf8vi+|H,.LX8|YuV+,;}#tCzhBK9 j2m=gGOQBxnH,');
+define('AUTH_SALT',        'Y._c[G0L1zE0`WV$a<g^p6sJ@iR(7w[Cl!g~Y@6,vy4{|s+yb-UCO}@v7Y8_{l_+');
+define('SECURE_AUTH_SALT', '!Avu0KV}6Y=J%ID$v`4Tbc1AcT!w;E$H?&3ooGaR64CH5>MlKJQZqZ#Bc4O_$U9J');
+define('LOGGED_IN_SALT',   'WIV!0&#WGmC$K+N6lx6A:7}#%4GJ4[kaw_8J4vmu?ZQ:l;gR??q10qR4ZGI~-m_T');
+define('NONCE_SALT',       'l$bjZQ&^%BnD|XEtdrpV|.p`#mVROo70-SO9{G{FO{2SL_ j$ZVscu4+rZ4[ds-4');
+
+/**#@-*/
 
 /**
- * WordPress Multi-Environment Config
- * 
- * Loads config file based on current environment, environment can be set
- * in either the environment variable 'WP_ENV' or can be set based on the 
- * server hostname.
- * 
- * This also overrides the option_home and option_siteurl settings in the 
- * WordPress database to ensure site URLs are correct between environments.
- * 
- * Common environment names are as follows, though you can use what you wish:
- * 
- *   production
- *   staging
- *   development
- * 
- * For each environment a config file must exist named wp-config.{environment}.php
- * with any settings specific to that environment. For example a development 
- * environment would use the config file: wp-config.development.php
- * 
- * Default settings that are common to all environments can exist in wp-config.default.php
- * 
- * @package    Studio 24 WordPress Multi-Environment Config
- * @version    1.0
- * @author     Studio 24 Ltd  <info@studio24.net>
+ * WordPress Database Table prefix.
+ *
+ * You can have multiple installations in one database if you give each a unique
+ * prefix. Only numbers, letters, and underscores please!
  */
+$table_prefix  = 'wp_';
 
-define('ALLOW_UNFILTERED_UPLOADS', true);
+/**
+ * WordPress Localized Language, defaults to English.
+ *
+ * Change this to localize WordPress. A corresponding MO file for the chosen
+ * language must be installed to wp-content/languages. For example, install
+ * de_DE.mo to wp-content/languages and set WPLANG to 'de_DE' to enable German
+ * language support.
+ */
+define('WPLANG', '');
 
-// Try environment variable 'WP_ENV'
-if (getenv('WP_ENV') !== false) {
-    // Filter non-alphabetical characters for security
-    define('WP_ENV', preg_replace('/[^a-z]/', '', getenv('WP_ENV')));
-} 
-
-// Define site host
-if (isset($_SERVER['X_FORWARDED_HOST']) && !empty($_SERVER['X_FORWARDED_HOST'])) {
-    $hostname = $_SERVER['X_FORWARDED_HOST'];
-} else {
-    $hostname = $_SERVER['HTTP_HOST'];
-}
-    
-// Try server hostname
-if (!defined('WP_ENV')) {
-    // Set environment based on hostname
-    include 'wp-config.env.php';
-}
-
-// Are we in SSL mode?
-if (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') {
-    $protocol = 'https://';
-} else {
-    $protocol = 'http://';
-}
-
-// Load default config
-include 'wp-config.default.php';
-
-// Load config file for current environment
-include 'wp-config.' . WP_ENV . '.php';
-
-// Define WordPress Site URLs if not already set in config files
-if (!defined('WP_SITEURL')) {
-    define('WP_SITEURL', $protocol . rtrim($hostname, '/'));
-}
-if (!defined('WP_HOME')) {
-    define('WP_HOME', $protocol . rtrim($hostname, '/'));
-}
-
-// Clean up
-unset($hostname, $protocol);
-
-/** End of WordPress Multi-Environment Config **/
-
+/**
+ * For developers: WordPress debugging mode.
+ *
+ * Change this to true to enable the display of notices during development.
+ * It is strongly recommended that plugin and theme developers use WP_DEBUG
+ * in their development environments.
+ */
+define('WP_DEBUG', false);
 
 /* That's all, stop editing! Happy blogging. */
 
