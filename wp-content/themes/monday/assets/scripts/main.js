@@ -20,14 +20,6 @@
         $('.navbar-collapse').collapse('hide');
     });
     // JavaScript to be fired on all pages, after page specific JS is fired
-    $('.fancybox.iframe').on('click', function(e) {
-        e.preventDefault();
-        $.fancybox.open({
-            href: window.home_url + '/investors.html',
-            type: 'iframe'
-        });
-    });
-
     $('#slides').superslides({
         animation: 'fade'
     });
