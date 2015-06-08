@@ -443,9 +443,20 @@ img.scale-with-grid {
     position: absolute;
     z-index: 3;
     width: 100%;
-    background-color: rgba(255, 255, 255, 0.85);
     top: 390px;
     min-height: calc(100% - 390px);
+    background-color: rgba(255, 255, 255, 0.85);
+}
+
+.content.row {
+    position: relative;
+}
+
+.content-info {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
 }
 
 .maincontent {
@@ -508,17 +519,60 @@ blockquote {
     font-weight: 400;
     font-size: 16px;
 }
+
+.fancybox-wrap,
+.fancybox-skin,
+.fancybox-inner {
+    width: 500px !important;
+    height: 500px !important;
+}
+
+@media only screen and (min-width: 768px) and (max-width: 959px) {
+    .headlinecontainer {
+        width: calc(100% - 60px);
+        margin: 0px 30px 0px 30px;
+        position: absolute;
+        z-index: 3;
+        background-color: rgba(0, 0, 0, .5);
+        color: #fff;
+        font-size: 30px;
+        line-height: 40px;
+        top: 200px;
+        left: 0;
+        padding: 40px 30px 30px;
+    }
+    .tenant {
+        color: #494a4a;
+        font-size: 12px;
+        padding-bottom: 15px;
+    }
+}
 /* #Media Queries
 ================================================== */
 /* Smaller than standard 960 (devices and browsers) */
 
-@media only screen and (max-width: 959px) {}
-/* Tablet Portrait size to standard 960 (devices and browsers) */
-
-@media only screen and (min-width: 768px) and (max-width: 959px) {}
-/* All Mobile Sizes (devices and browser) */
+@media (min-width: 768px)and (max-width: 991px) {
+    .team-member .team-title {
+        font-size: 15px !important;
+    }
+}
 
 @media only screen and (max-width: 767px) {
+    .footertext,
+    .socialmedia {
+        z-index: 1000;
+        position: absolute;
+        bottom: 10px!important;
+        color: #999;
+    }
+    .headlinecontainer {
+        top: 10px;
+        width: 100%;
+        margin: 0;
+        padding: 10px;
+        font-size: 17px;
+        line-height: 26px;
+    }
     .navbar-default {
         position: inherit;
         border: none;
@@ -634,7 +688,7 @@ blockquote {
         }
     }
     .home footer {
-        position: absolute;
+        position: relative;
         width: 100%;
     }
     .home footer {
@@ -658,14 +712,6 @@ blockquote {
         .socialmedia {
             padding: 15px 0 23px 0;
         }
-    }
-    .headlinecontainer {
-        top: 150px;
-        width: 100%;
-        margin: 0;
-        padding: 33px 25px 30px 25px;
-        font-size: 21.72px;
-        line-height: 28.93px;
     }
     .tenantrow {
         border-bottom: none;
@@ -692,6 +738,34 @@ blockquote {
                 line-height: 44px;
             }
         }
+    }
+    .team-member .team-title {
+        font-size: 15px;
+    }
+    .footertext {
+        left: 0px;
+        width: 100%;
+        font-size: 10px
+    }
+    .headlinecontainer {
+        top: 20px;
+        width: 100%;
+        margin: 0;
+        padding: 33px 25px 30px;
+        font-size: 21.72px;
+        line-height: 28.93px;
+    }
+    .content-info {
+        position: initial;
+    }
+    .content.row {
+        position: initial;
+    }
+    .fancybox-wrap,
+    .fancybox-skin,
+    .fancybox-inner {
+        width: 300px !important;
+        height: 500px !important;
     }
 }
 /* #Font-Face
