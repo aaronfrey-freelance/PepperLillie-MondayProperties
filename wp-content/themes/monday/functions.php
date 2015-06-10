@@ -45,3 +45,25 @@ function add_category_to_single($classes) {
   // return the $classes array
   return $classes;
 }
+
+add_action( 'wp', 'redirect_visitors' );
+
+function redirect_visitors() {
+  if ( !is_user_logged_in() && is_page('investors') ) {
+      wp_redirect(wp_login_url(get_permalink(get_page_by_path('investors'))));
+      exit;
+  }
+}
+
+add_action("login_head", "my_login_head");
+function my_login_head() {
+  echo "
+  <style>
+  body.login #login h1 a {
+    background: url('".get_bloginfo('template_url')."/dist/images/logo2.png') no-repeat scroll center top transparent;
+    height: 180px;
+    width: 256px;
+  }
+  </style>
+  ";
+}
