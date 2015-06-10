@@ -220,3 +220,91 @@
         }
     }
 }
+/**
+ * Investors
+ */
+
+.investors {
+    background: #f5f5f5;
+    color: #000;
+    h2 {
+        color: #000;
+        font-weight: bold;
+        text-transform: uppercase;
+        margin-top: 40px;
+        padding-bottom: 10px;
+    }
+    hr {
+        background: #dadada;
+    }
+    header {
+        height: 153px;
+        background: #000;
+        .logo {
+            display: inline-block;
+            img {
+                width: 193px;
+                height: auto;
+                margin-left: 37px;
+                margin-top: 11px;
+            }
+        }
+    }
+    .welcome {
+        font-size: 14px;
+        font-weight: bold;
+        color: #fff;
+        position: absolute;
+        top: 95px;
+        right: 23px;
+        width: auto;
+        a {
+            text-transform: uppercase;
+            color: #1aa2e1;
+            text-decoration: none;
+        }
+    }
+    footer {
+        position: initial;
+        .footertext {
+            position: initial;
+            float: left;
+        }
+        .socialmedia {
+            position: initial;
+            float: right;
+        }
+    }
+}
+
+@media only screen and (max-width: 479px) {
+    .investors {
+        h2 {
+            margin-top: 10px;
+        }
+        header {
+            height: 109px;
+            .logo {
+                img {
+                    width: 116px;
+                    margin-left: 29px;
+                    margin-top: 14px;
+                }
+            }
+        }
+        .welcome {
+            position: initial;
+            margin-top: 22px;
+            margin-bottom: 11px;
+            color: #000;
+        }
+        footer {
+            .footertext {
+                float: none;
+            }
+            .socialmedia {
+                float: none;
+            }
+        }
+    }
+}

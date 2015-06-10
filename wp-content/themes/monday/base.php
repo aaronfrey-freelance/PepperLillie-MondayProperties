@@ -11,7 +11,12 @@ use Roots\Sage\Wrapper;
 
     <?php
       do_action('get_header');
-      get_template_part('templates/header');
+      
+      if(!is_page('investors')) {
+        get_template_part('templates/header');
+      } else {
+        get_template_part('templates/header', 'investors');
+      }
     ?>
 
     <div class="wrap container-fluid" role="document">

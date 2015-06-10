@@ -29,6 +29,6 @@
     }
   },
   "config": {
-    "devUrl": "http://localhost:8888/Freelance/PepperLillie-Monday/wordpress"
+    "devUrl": "http://localhost:8888/Freelance/PepperLillie-Monday"
   }
 }
