@@ -4,10 +4,8 @@
 - Ignore the User Groups column in the Excel list.
 	- Access should be granted to folders and individual docs by user (checkbox?) name, not category.
 
-- Add files to each property post
-- In the loop get all files and add post name to the select posts that have files associated with them
-- Loop through the files and put all of the ones associated with a post in an array
 
+- Per page is "Projects" per page, not files
 
-- How do I display single files?
-- What does per page mean? Projects per page? What about single files?
+- Create a custom 'Projects' category
+- Display the main project date as the last added file date

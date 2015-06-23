@@ -103,10 +103,13 @@
 				<div class="file-list">
 					<div class="col-sm-12">
 						<div class="row title-row">
-							<div class="col-xs-8">
+							<div class="col-xs-9 col-sm-8">
 								<strong>Title</strong>
 							</div>
-							<div class="col-xs-4">
+							<div class="hidden-xs col-sm-2">
+								<strong>Size</strong>
+							</div>
+							<div class="col-xs-3 col-sm-2">
 								<strong>Date</strong>
 							</div>
 						</div>
@@ -119,11 +122,14 @@
 										<div class="panel-heading odd" role="tab">
 											<h4 class="panel-title">
 												<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion_<?php echo $post[0]->file_post_id;?>" href="#collapse_<?php echo $post[0]->file_post_id;?>">
-													<div class="col-xs-8">
+													<div class="col-xs-9 col-sm-8">
 														<i class="arrow pull-left"></i>
 														<p class="title"><?php echo $post_title; ?></p>
 													</div>
-													<div class="col-xs-4">
+													<div class="hidden-xs col-sm-2">
+														<strong>2.00 MB</strong>
+													</div>
+													<div class="col-xs-3 col-sm-2">
 														<p><?php echo date('m/d/Y', strtotime($post[0]->post_date)); ?></p>
 													</div>
 												</a>
@@ -132,10 +138,13 @@
 										<div id="collapse_<?php echo $post[0]->file_post_id;?>" class="panel-collapse collapse">
 											<div class="panel-body">
 												<?php foreach($post as $file) : ?>
-												<div class="col-xs-8">
+												<div class="col-xs-9 col-sm-8">
 													<p class="file-name">- <?php echo $file->file_name; ?></p>
 												</div>
-												<div class="col-xs-4">
+												<div class="hidden-xs col-sm-2">
+													<strong>2.00 MB</strong>
+												</div>
+												<div class="col-xs-3 col-sm-2">
 													<p><?php echo date('m/d/Y', strtotime($file->file_date)); ?></p>
 												</div>
 												<?php endforeach; ?>
