@@ -114,12 +114,12 @@
 							</div>
 						</div>
 
-						<?php foreach($sorted_post_files as $post_title => $post) : ?>
-							
+						<?php $index = 0; foreach($sorted_post_files as $post_title => $post) : ?>
+
 							<div class="row file">
 								<div class="panel-group" id="accordion_<?php echo $post[0]->file_post_id;?>" role="tablist">
 									<div class="panel panel-default">
-										<div class="panel-heading odd" role="tab">
+										<div class="panel-heading <?php echo $index % 2 != 0 ? '' : 'odd'; ?>" role="tab">
 											<h4 class="panel-title">
 												<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion_<?php echo $post[0]->file_post_id;?>" href="#collapse_<?php echo $post[0]->file_post_id;?>">
 													<div class="col-xs-9 col-sm-8">
@@ -154,7 +154,7 @@
 								</div>
 							</div>
 
-						<?php endforeach; ?>
+						<?php $index++; endforeach; ?>
 
 					</div>
 
