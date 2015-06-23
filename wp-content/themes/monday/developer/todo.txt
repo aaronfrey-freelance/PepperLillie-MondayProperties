@@ -7,4 +7,7 @@
 - Add files to each property post
 - In the loop get all files and add post name to the select posts that have files associated with them
 - Loop through the files and put all of the ones associated with a post in an array
-- 
+
+
+- How do I display single files?
+- What does per page mean? Projects per page? What about single files?

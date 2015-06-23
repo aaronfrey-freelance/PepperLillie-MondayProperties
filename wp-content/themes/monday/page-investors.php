@@ -1,7 +1,45 @@
 <?php
 	global $wpdb;
-	$cats = $wpdb->get_results('SELECT cat_id, cat_name FROM wp_wpfb_cats ORDER BY cat_name ASC', OBJECT);
-	$years = $wpdb->get_results('SELECT DISTINCT YEAR(file_date) AS year FROM wp_wpfb_files ORDER BY year ASC', OBJECT);
+
+	$cats = $wpdb->get_results(
+		'SELECT cat_id, cat_name
+		FROM wp_wpfb_cats
+		JOIN wp_wpfb_files ON wp_wpfb_files.file_category = wp_wpfb_cats.cat_id
+		ORDER BY cat_name ASC',
+	OBJECT);
+
+	$years = $wpdb->get_results(
+		'SELECT DISTINCT YEAR(file_date) AS year
+		FROM wp_wpfb_files
+		ORDER BY year ASC',
+	OBJECT);
+
+	$files = $wpdb->get_results(
+		'SELECT
+			wp_wpfb_files.file_name,
+			wp_wpfb_files.file_path,
+			wp_wpfb_files.file_date,
+			wp_wpfb_files.file_post_id,
+			wp_posts.post_title,
+			wp_posts.post_date
+		FROM wp_wpfb_files
+		LEFT JOIN wp_posts ON wp_posts.ID = wp_wpfb_files.file_post_id
+		ORDER BY
+			wp_posts.post_title ASC,
+			wp_wpfb_files.file_name ASC', 
+	OBJECT);
+
+	$sorted_files = [];
+	$sorted_post_files = [];
+
+	foreach ($files as $file) {
+		if (!$file->file_post_id) {
+			$sorted_files[] = $file;
+		} else {
+			$sorted_post_files[$file->post_title][] = $file;
+		}
+	}
+
 ?>
 
 <?php while (have_posts()) : the_post(); ?>
@@ -25,7 +63,7 @@
 					<div class="dropdown pull-left">
 						<button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
 							All Documents
-							<span class="caret"></span>
+							<span class="handle"></span>
 						</button>
 						<ul class="dropdown-menu">
 							<li><a href="0">All Documents</a></li>
@@ -44,7 +82,7 @@
 					<div class="dropdown pull-left">
 						<button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
 							All Years
-							<span class="caret"></span>
+							<span class="handle"></span>
 						</button>
 						<ul class="dropdown-menu">
 							<li><a href="0">All Years</a></li>
@@ -59,10 +97,8 @@
 				<div class="clearfix"></div>
 
 				<?php
-					get_template_part('templates/content', 'page');
+					//get_template_part('templates/content', 'page');
 				?>
-
-				<br>
 
 				<div class="file-list">
 					<div class="col-sm-12">
@@ -74,68 +110,46 @@
 								<strong>Date</strong>
 							</div>
 						</div>
-						<div class="row file">
-							<div class="panel-group" id="accordion" role="tablist">
-								<div class="panel panel-default">
-									<div class="panel-heading odd" role="tab">
-										<h4 class="panel-title">
-											<a role="button" data-toggle="collapse" data-parent="#accordion1" href="#collapseOne">
-												<div class="col-xs-8">
-													<i class="arrow pull-left"></i>
-													<p class="title">Property / Project Name</p>
-												</div>
-												<div class="col-xs-4">
-													<p>06/01/2015</p>
-												</div>
-											</a>
-										</h4>
-									</div>
-									<div id="collapseOne" class="panel-collapse collapse">
-										<div class="panel-body">
-											<div class="col-xs-8">
-												<p class="file-name">- Document_Name.pdf</p>
-											</div>
-											<div class="col-xs-4">
-												<p>06/01/2015</p>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="row file">
-							<div class="panel-group" id="accordion2" role="tablist">
-								<div class="panel panel-default">
-									<div class="panel-heading" role="tab">
-										<h4 class="panel-title">
-											<a role="button" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo">
-												<div class="col-xs-8">
-													<i class="arrow pull-left"></i>
-													<p class="title">Property / Project Name</p>
-												</div>
-												<div class="col-xs-4">
-													<p>06/01/2015</p>
-												</div>
-											</a>
-										</h4>
-									</div>
-									<div id="collapseTwo" class="panel-collapse collapse">
-										<div class="panel-body">
-											<div class="col-xs-8">
-												<p class="file-name">- Document_Name.pdf</p>
-											</div>
-											<div class="col-xs-4">
-												<p>06/01/2015</p>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
 
-				<br>
+						<?php foreach($sorted_post_files as $post_title => $post) : ?>
+							
+							<div class="row file">
+								<div class="panel-group" id="accordion_<?php echo $post[0]->file_post_id;?>" role="tablist">
+									<div class="panel panel-default">
+										<div class="panel-heading odd" role="tab">
+											<h4 class="panel-title">
+												<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion_<?php echo $post[0]->file_post_id;?>" href="#collapse_<?php echo $post[0]->file_post_id;?>">
+													<div class="col-xs-8">
+														<i class="arrow pull-left"></i>
+														<p class="title"><?php echo $post_title; ?></p>
+													</div>
+													<div class="col-xs-4">
+														<p><?php echo date('m/d/Y', strtotime($post[0]->post_date)); ?></p>
+													</div>
+												</a>
+											</h4>
+										</div>
+										<div id="collapse_<?php echo $post[0]->file_post_id;?>" class="panel-collapse collapse">
+											<div class="panel-body">
+												<?php foreach($post as $file) : ?>
+												<div class="col-xs-8">
+													<p class="file-name">- <?php echo $file->file_name; ?></p>
+												</div>
+												<div class="col-xs-4">
+													<p><?php echo date('m/d/Y', strtotime($file->file_date)); ?></p>
+												</div>
+												<?php endforeach; ?>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+						<?php endforeach; ?>
+
+					</div>
+
+				</div>
 
 				<div class="dropdown-group">
 
@@ -144,7 +158,7 @@
 					<div class="dropdown pull-left">
 						<button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
 							10 Results per page
-							<span class="caret"></span>
+							<span class="handle"></span>
 						</button>
 						<ul class="dropdown-menu">
 							<li><a href="#">10 Results per page</a></li>
