@@ -59,10 +59,18 @@
 
 	foreach ($files as $file) {
 		$sorted_post_files[$file->post_title]['files'][] = $file;
+
+		// Get the total file size of all files
 		$sorted_post_files[$file->post_title]['size'] =
 			array_key_exists('size', $sorted_post_files[$file->post_title]) ?
 			$sorted_post_files[$file->post_title]['size'] + intval($file->file_size) :
 			intval($file->file_size);
+
+		// Get the last time this project was modified
+		$sorted_post_files[$file->post_title]['modified'] =
+			array_key_exists('modified', $sorted_post_files[$file->post_title]) ?
+			($sorted_post_files[$file->post_title]['modified'] > $file->file_date ? $sorted_post_files[$file->post_title]['modified'] : $file->file_date) :
+			$file->file_date;
 	}
 ?>
 
@@ -154,7 +162,7 @@
 														<strong><?php echo human_filesize($post['size']); ?></strong>
 													</div>
 													<div class="col-xs-4 col-sm-2">
-														<p><?php echo date('m/d/Y', strtotime($post['files'][0]->post_date)); ?></p>
+														<p><?php echo date('m/d/Y', strtotime($post['modified'])); ?></p>
 													</div>
 												</a>
 											</h4>
