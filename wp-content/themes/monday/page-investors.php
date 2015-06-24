@@ -1,5 +1,11 @@
 <?php
 
+	function human_filesize($bytes, $decimals = 2) {
+	    $size = array('B','kB','MB','GB','TB','PB','EB','ZB','YB');
+	    $factor = floor((strlen($bytes) - 1) / 3);
+	    return sprintf("%.{$decimals}f", $bytes / pow(1024, $factor)) . ' ' . @$size[$factor];
+	}
+
 	$roles_where = '';
 
 	// Get the current users username
@@ -33,6 +39,7 @@
 	$files = $wpdb->get_results(
 		"SELECT
 			wp_wpfb_files.file_name,
+			wp_wpfb_files.file_size,
 			wp_wpfb_files.file_path,
 			wp_wpfb_files.file_date,
 			wp_wpfb_files.file_post_id,
@@ -48,17 +55,15 @@
 			wp_wpfb_files.file_name ASC", 
 	OBJECT);
 
-	$sorted_files = [];
 	$sorted_post_files = [];
 
 	foreach ($files as $file) {
-		if (!$file->file_post_id) {
-			$sorted_files[] = $file;
-		} else {
-			$sorted_post_files[$file->post_title][] = $file;
-		}
+		$sorted_post_files[$file->post_title]['files'][] = $file;
+		$sorted_post_files[$file->post_title]['size'] =
+			array_key_exists('size', $sorted_post_files[$file->post_title]) ?
+			$sorted_post_files[$file->post_title]['size'] + intval($file->file_size) :
+			intval($file->file_size);
 	}
-
 ?>
 
 <?php while (have_posts()) : the_post(); ?>
@@ -122,13 +127,13 @@
 				<div class="file-list">
 					<div class="col-sm-12">
 						<div class="row title-row">
-							<div class="col-xs-9 col-sm-8">
+							<div class="col-xs-8 col-sm-8">
 								<strong>Title</strong>
 							</div>
 							<div class="hidden-xs col-sm-2">
 								<strong>Size</strong>
 							</div>
-							<div class="col-xs-3 col-sm-2">
+							<div class="col-xs-4 col-sm-2">
 								<strong>Date</strong>
 							</div>
 						</div>
@@ -136,34 +141,35 @@
 						<?php $index = 0; foreach($sorted_post_files as $post_title => $post) : ?>
 
 							<div class="row file">
-								<div class="panel-group" id="accordion_<?php echo $post[0]->file_post_id;?>" role="tablist">
+								<div class="panel-group" id="accordion_<?php echo $post['files'][0]->file_post_id;?>" role="tablist">
 									<div class="panel panel-default">
 										<div class="panel-heading <?php echo $index % 2 != 0 ? '' : 'odd'; ?>" role="tab">
 											<h4 class="panel-title">
-												<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion_<?php echo $post[0]->file_post_id;?>" href="#collapse_<?php echo $post[0]->file_post_id;?>">
-													<div class="col-xs-9 col-sm-8">
+												<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion_<?php echo $post['files'][0]->file_post_id;?>" href="#collapse_<?php echo $post['files'][0]->file_post_id;?>">
+													<div class="col-xs-8 col-sm-8">
 														<i class="arrow pull-left"></i>
 														<p class="title"><?php echo $post_title; ?></p>
 													</div>
 													<div class="hidden-xs col-sm-2">
-														<strong>2.00 MB</strong>
+														<strong><?php echo human_filesize($post['size']); ?></strong>
 													</div>
-													<div class="col-xs-3 col-sm-2">
-														<p><?php echo date('m/d/Y', strtotime($post[0]->post_date)); ?></p>
+													<div class="col-xs-4 col-sm-2">
+														<p><?php echo date('m/d/Y', strtotime($post['files'][0]->post_date)); ?></p>
 													</div>
 												</a>
 											</h4>
 										</div>
-										<div id="collapse_<?php echo $post[0]->file_post_id;?>" class="panel-collapse collapse">
+										<div id="collapse_<?php echo $post['files'][0]->file_post_id;?>" class="panel-collapse collapse">
 											<div class="panel-body <?php echo $index % 2 != 0 ? '' : 'odd'; ?>">
-												<?php foreach($post as $file) : ?>
-												<div class="col-xs-9 col-sm-8">
+												<?php foreach($post['files'] as $file) : ?>
+												<div class="col-xs-8 col-sm-8">
 													<p class="file-name">- <?php echo $file->file_name; ?></p>
 												</div>
 												<div class="hidden-xs col-sm-2">
-													<strong>2.00 MB</strong>
+
+													<strong><?php echo human_filesize($file->file_size); ?></strong>
 												</div>
-												<div class="col-xs-3 col-sm-2">
+												<div class="col-xs-4 col-sm-2">
 													<p><?php echo date('m/d/Y', strtotime($file->file_date)); ?></p>
 												</div>
 												<?php endforeach; ?>
