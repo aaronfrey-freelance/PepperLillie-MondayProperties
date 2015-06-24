@@ -1,4 +1,16 @@
 <?php
+
+	$roles_where = '';
+
+	// Get the current users username
+	global $current_user;
+    get_currentuserinfo();
+
+    // Get the current users roles
+	foreach($current_user->roles as $role ) {
+		$roles_where .= " OR find_in_set('$role', REPLACE(file_user_roles,'|',',')) <> 0";
+	}
+
 	global $wpdb;
 
 	$cats = $wpdb->get_results(
@@ -14,8 +26,12 @@
 		ORDER BY year ASC',
 	OBJECT);
 
+	// Select all of the files that meet the following criteria:
+	// 1. Everyone is allowed to view the file
+	// 2. The current user is explicitly allowed to view the file
+	// 3. The user is attached to a role that is allowed to view the file
 	$files = $wpdb->get_results(
-		'SELECT
+		"SELECT
 			wp_wpfb_files.file_name,
 			wp_wpfb_files.file_path,
 			wp_wpfb_files.file_date,
@@ -24,9 +40,12 @@
 			wp_posts.post_date
 		FROM wp_wpfb_files
 		LEFT JOIN wp_posts ON wp_posts.ID = wp_wpfb_files.file_post_id
+		WHERE find_in_set('_u_$current_user->user_login', REPLACE(file_user_roles,'|',',')) <> 0
+		OR file_user_roles = ''
+		$roles_where
 		ORDER BY
 			wp_posts.post_title ASC,
-			wp_wpfb_files.file_name ASC', 
+			wp_wpfb_files.file_name ASC", 
 	OBJECT);
 
 	$sorted_files = [];
