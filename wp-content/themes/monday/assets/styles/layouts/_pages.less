@@ -358,8 +358,14 @@
                         }
                     }
                     .panel-body {
-                        padding: 0 0 10px 0;
+                        padding: 0;
                         border: none;
+                        line-height: 33px;
+                        border: none;
+                        background-color: #f5f5f5;
+                        &.odd {
+                            background-color: #fff;
+                        }
                         .file-name {
                             padding-left: 31px;
                         }
@@ -412,6 +418,9 @@
                 .btn {
                     width: 100%;
                     display: block;
+                }
+                .dropdown-menu {
+                    width: 100%;
                 }
             }
         }

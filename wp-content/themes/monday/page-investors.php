@@ -61,7 +61,7 @@
 					<span class="pull-left">View:</span>
 
 					<div class="dropdown pull-left">
-						<button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+						<button class="btn btn-default dropdown-toggle" value="0" type="button" data-toggle="dropdown">
 							All Documents
 							<span class="handle"></span>
 						</button>
@@ -80,7 +80,7 @@
 					<span class="pull-left">Year:</span>
 
 					<div class="dropdown pull-left">
-						<button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+						<button class="btn btn-default dropdown-toggle" value="0" type="button" data-toggle="dropdown">
 							All Years
 							<span class="handle"></span>
 						</button>
@@ -136,7 +136,7 @@
 											</h4>
 										</div>
 										<div id="collapse_<?php echo $post[0]->file_post_id;?>" class="panel-collapse collapse">
-											<div class="panel-body">
+											<div class="panel-body <?php echo $index % 2 != 0 ? '' : 'odd'; ?>">
 												<?php foreach($post as $file) : ?>
 												<div class="col-xs-9 col-sm-8">
 													<p class="file-name">- <?php echo $file->file_name; ?></p>
@@ -165,15 +165,15 @@
 					<span class="pull-left">View:</span>
 
 					<div class="dropdown pull-left">
-						<button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+						<button class="btn btn-default dropdown-toggle" value="10" type="button" data-toggle="dropdown">
 							10 Results per page
 							<span class="handle"></span>
 						</button>
 						<ul class="dropdown-menu">
-							<li><a href="#">10 Results per page</a></li>
-							<li><a href="#">25 Results per page</a></li>
-							<li><a href="#">50 Results per page</a></li>
-							<li><a href="#">75 Results per page</a></li>
+							<li><a href="10">10 Results per page</a></li>
+							<li><a href="25">25 Results per page</a></li>
+							<li><a href="50">50 Results per page</a></li>
+							<li><a href="75">75 Results per page</a></li>
 						</ul>
 					</div>
 

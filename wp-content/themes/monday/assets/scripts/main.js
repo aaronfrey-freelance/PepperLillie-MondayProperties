@@ -70,4 +70,11 @@
         rescaleOnResize: true
     });
 
+    // Investors Page
+    $(".dropdown-menu li a").click(function(e) {
+        e.preventDefault();
+        $(this).parents('.dropdown').find('.dropdown-toggle').text($(this).text());
+        $(this).parents('.dropdown').find('.dropdown-toggle').val($(this).attr('href'));
+    });
+
 })(jQuery); // Fully reference jQuery after this point.
