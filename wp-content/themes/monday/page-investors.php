@@ -20,7 +20,7 @@
 	global $wpdb;
 
 	$cats = $wpdb->get_results(
-		'SELECT cat_id, cat_name
+		'SELECT DISTINCT cat_id, cat_name
 		FROM wp_wpfb_cats
 		JOIN wp_wpfb_files ON wp_wpfb_files.file_category = wp_wpfb_cats.cat_id
 		ORDER BY cat_name ASC',
@@ -93,10 +93,14 @@
 					<span class="pull-left">View:</span>
 
 					<div class="dropdown pull-left">
-						<button class="btn btn-default dropdown-toggle" value="0" type="button" data-toggle="dropdown">
+						<button
+							class="btn btn-default dropdown-toggle"
+							type="button"
+							data-toggle="dropdown">
 							All Documents
 							<span class="handle"></span>
 						</button>
+						<input type="hidden" value="0" data-filter-option="category">
 						<ul class="dropdown-menu">
 							<li><a href="0">All Documents</a></li>
 							<?php foreach($cats as $cat) : ?>
@@ -112,10 +116,14 @@
 					<span class="pull-left">Year:</span>
 
 					<div class="dropdown pull-left">
-						<button class="btn btn-default dropdown-toggle" value="0" type="button" data-toggle="dropdown">
+						<button
+							class="btn btn-default dropdown-toggle"
+							type="button"
+							data-toggle="dropdown">
 							All Years
 							<span class="handle"></span>
 						</button>
+						<input type="hidden" value="0" data-filter-option="year">
 						<ul class="dropdown-menu">
 							<li><a href="0">All Years</a></li>
 							<?php foreach($years as $year) : ?>
@@ -198,10 +206,14 @@
 					<span class="pull-left">View:</span>
 
 					<div class="dropdown pull-left">
-						<button class="btn btn-default dropdown-toggle" value="10" type="button" data-toggle="dropdown">
+						<button
+							class="btn btn-default dropdown-toggle"
+							type="button"
+							data-toggle="dropdown">
 							10 Results per page
 							<span class="handle"></span>
 						</button>
+						<input type="hidden" value="10" data-filter-option="perpage">
 						<ul class="dropdown-menu">
 							<li><a href="10">10 Results per page</a></li>
 							<li><a href="25">25 Results per page</a></li>

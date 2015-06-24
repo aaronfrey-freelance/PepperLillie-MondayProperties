@@ -14,6 +14,7 @@
 
     <script type="text/javascript">
       window.home_url = '<?php echo get_home_url(); ?>';
+      window.ajaxurl = '<?php echo admin_url("admin-ajax.php"); ?>';
     </script>
 
     <?php wp_head();?>

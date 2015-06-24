@@ -67,3 +67,11 @@ function my_login_head() {
   </style>
   ";
 }
+
+add_action( 'wp_ajax_my_action', 'my_action_callback' );
+add_action( 'wp_ajax_nopriv_my_action', 'my_action_callback' );
+
+function my_action_callback() {
+  echo json_encode('THIS IS A TEST');
+  die();
+}

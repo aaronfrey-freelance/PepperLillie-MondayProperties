@@ -74,7 +74,22 @@
     $(".dropdown-menu li a").click(function(e) {
         e.preventDefault();
         $(this).parents('.dropdown').find('.dropdown-toggle').text($(this).text());
-        $(this).parents('.dropdown').find('.dropdown-toggle').val($(this).attr('href'));
+        $(this).parents('.dropdown').find('input').val($(this).attr('href')).change();
+    });
+
+    $(document).on('change', '[data-filter-option]', function() {
+       var data = {
+           action: 'my_action',
+           //post_id: post_id
+       };
+
+       $.post(ajaxurl, data, function(response) {
+           var result = $.parseJSON(response);
+           console.log(result);
+           if (!result.error) {
+
+           }
+       });
     });
 
 })(jQuery); // Fully reference jQuery after this point.
