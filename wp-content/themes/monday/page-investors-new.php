@@ -147,7 +147,7 @@
 										<div id="collapse_<?php echo $post['files'][0]->file_post_id;?>" class="panel-collapse collapse">
 											<div class="panel-body <?php echo $index % 2 != 0 ? '' : 'odd'; ?>">
 												<?php foreach($post['files'] as $file) : ?>
-												<a target="_blank" href="<?php echo $upload_dir['baseurl'] . '/filebase/' . $file->file_path; ?>">
+												<a href="<?php echo site_url() . '/download/' . $file->file_path; ?>">
 													<div class="col-xs-8 col-sm-8">
 														<p class="file-name">- <?php echo $file->file_name; ?></p>
 													</div>
