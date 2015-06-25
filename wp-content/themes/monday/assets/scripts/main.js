@@ -74,26 +74,48 @@
     $(".dropdown-menu li a").click(function(e) {
         e.preventDefault();
         $(this).parents('.dropdown').find('.dropdown-toggle').html(
-            $(this).text()+'<span class="handle"></span>'
+            $(this).text() + '<span class="handle"></span>'
         );
         $(this).parents('.dropdown').find('input').val($(this).attr('href')).change();
     });
 
     $(document).on('change', '[data-filter-option]', function() {
-       var data = {
-           action: 'my_action',
-           category: $('[data-filter-option="category"]').val(),
-           year: $('[data-filter-option="year"]').val(),
-           perpage: $('[data-filter-option="perpage"]').val()
-       };
 
-       $.post(ajaxurl, data, function(response) {
-           var result = $.parseJSON(response);
-           console.log(result);
-           if (!result.error) {
+        var params = [];
 
-           }
-       });
+        if ($('[data-filter-option="category"]').val() !== '0') {
+            params.push({
+                'name': 'category',
+                'value': $('[data-filter-option="category"]').val()
+            });
+        }
+
+        if ($('[data-filter-option="year"]').val() !== '0') {
+            params.push({
+                'name': 'fileyear',
+                'value': $('[data-filter-option="year"]').val()
+            });
+        }
+
+        params.push({
+            'name': 'perpage',
+            'value': $('[data-filter-option="perpage"]').val()
+        });
+
+        window.location.href = window.home_url + '/investors/?' + $.param(params);
+
+        // var data = {
+        //    action: 'my_action',
+        //    category: $('[data-filter-option="category"]').val(),
+        //    year: $('[data-filter-option="year"]').val(),
+        //    perpage: $('[data-filter-option="perpage"]').val()
+        // };
+
+        // $.post(ajaxurl, data, function(response) {
+        //    var result = $.parseJSON(response);
+        //    console.log(result);
+        //    if (!result.error) {}
+        // });
     });
 
 })(jQuery); // Fully reference jQuery after this point.

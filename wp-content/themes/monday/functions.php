@@ -85,6 +85,25 @@ function human_filesize($bytes, $decimals = 2) {
     return sprintf("%.{$decimals}f", $bytes / pow(1024, $factor)) . ' ' . @$size[$factor];
 }
 
+function file_cats() {
+  global $wpdb;
+  return $wpdb->get_results(
+    'SELECT DISTINCT cat_id, cat_name
+    FROM wp_wpfb_cats
+    JOIN wp_wpfb_files ON wp_wpfb_files.file_category = wp_wpfb_cats.cat_id
+    ORDER BY cat_name ASC',
+  OBJECT);
+}
+
+function file_years() {
+  global $wpdb;
+  return $wpdb->get_results(
+    'SELECT DISTINCT YEAR(file_date) AS year
+    FROM wp_wpfb_files
+    ORDER BY year DESC',
+  OBJECT);
+}
+
 function get_user_files($category = 0, $year = 0, $perpage = 10) {
 
   global $wpdb;
@@ -96,19 +115,19 @@ function get_user_files($category = 0, $year = 0, $perpage = 10) {
   // Should we get files by a category
   $category_join = '';
   if($category) {
-    $category_join = " JOIN wp_wpfb_cats ON wp_wpfb_cats.cat_id = wp_wpfb_files.file_category AND wp_wpfb_cats.cat_id = $category ";
+    $category_join = "JOIN wp_wpfb_cats ON wp_wpfb_cats.cat_id = wp_wpfb_files.file_category AND wp_wpfb_cats.cat_id = $category";
   }
 
   // Should we get files by a specific year
   $year_where = '';
   if($year) {
-    $year_where = " AND YEAR(wp_wpfb_files.file_date) = $year ";
+    $year_where = "AND YEAR(wp_wpfb_files.file_date) = '$year'";
   }
 
   // Get the current users roles
   $roles_where = '';
   foreach($current_user->roles as $role ) {
-    $roles_where .= " OR find_in_set('$role', REPLACE(file_user_roles,'|',',')) <> 0 ";
+    $roles_where .= "OR find_in_set('$role', REPLACE(file_user_roles,'|',',')) <> 0";
   }
 
   // Select all of the files that meet the following criteria:
@@ -127,13 +146,14 @@ function get_user_files($category = 0, $year = 0, $perpage = 10) {
     FROM wp_wpfb_files
     LEFT JOIN wp_posts ON wp_posts.ID = wp_wpfb_files.file_post_id
     $category_join
-    WHERE (find_in_set('_u_$current_user->user_login', REPLACE(file_user_roles,'|',',')) <> 0 OR file_user_roles = '')
+    WHERE (find_in_set('_u_$current_user->user_login', REPLACE(file_user_roles,'|',',')) <> 0 OR file_user_roles = '' $roles_where)
     $year_where
-    $roles_where
     ORDER BY
       wp_posts.post_title ASC,
       wp_wpfb_files.file_name ASC", 
   OBJECT);
+
+  //echo('<pre>'.$wpdb->last_query.'</pre>');
 
   $sorted_post_files = [];
 
@@ -153,5 +173,5 @@ function get_user_files($category = 0, $year = 0, $perpage = 10) {
       $file->file_date;
   }
 
-  return $sorted_post_files;
+  return array_slice($sorted_post_files, 0, $perpage);
 }

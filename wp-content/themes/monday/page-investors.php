@@ -1,18 +1,28 @@
 <?php
-	global $wpdb;
+	$category 	= isset($_GET['category']) ? $_GET['category'] : 0;
+	$year 		= isset($_GET['fileyear']) ? $_GET['fileyear'] : 0;
+	$perpage 	= isset($_GET['perpage']) ? $_GET['perpage'] : 10;
+	
+	// Get the category name
+	$file_cats = file_cats();
+	$cat_name = 'All Documents';
+	foreach ($file_cats as $cat) {
+		if($cat->cat_id == $category) {
+			$cat_name = $cat->cat_name;
+			break;
+		}
+	}
 
-	$cats = $wpdb->get_results(
-		'SELECT DISTINCT cat_id, cat_name
-		FROM wp_wpfb_cats
-		JOIN wp_wpfb_files ON wp_wpfb_files.file_category = wp_wpfb_cats.cat_id
-		ORDER BY cat_name ASC',
-	OBJECT);
+	$resuls_array = [
+		"10" => "10 Results per page",
+		"25" => "25 Results per page",
+		"50" => "50 Results per page",
+		"75" => "75 Results per page"
+	];
 
-	$years = $wpdb->get_results(
-		'SELECT DISTINCT YEAR(file_date) AS year
-		FROM wp_wpfb_files
-		ORDER BY year DESC',
-	OBJECT);
+	// var_dump($category);
+	// var_dump($year);
+	// var_dump($perpage);
 ?>
 
 <?php while (have_posts()) : the_post(); ?>
@@ -38,13 +48,13 @@
 							class="btn btn-default dropdown-toggle"
 							type="button"
 							data-toggle="dropdown">
-							All Documents
+							<?php echo $cat_name; ?>
 							<span class="handle"></span>
 						</button>
-						<input type="hidden" value="0" data-filter-option="category">
+						<input type="hidden" value="<?php echo $category; ?>" data-filter-option="category">
 						<ul class="dropdown-menu">
 							<li><a href="0">All Documents</a></li>
-							<?php foreach($cats as $cat) : ?>
+							<?php foreach($file_cats as $cat) : ?>
 							<li><a href="<?php echo $cat->cat_id;?>"><?php echo $cat->cat_name;?></a></li>
 							<?php endforeach; ?>
 						</ul>
@@ -61,14 +71,14 @@
 							class="btn btn-default dropdown-toggle"
 							type="button"
 							data-toggle="dropdown">
-							All Years
+							<?php echo $year != 0 ? $year : 'All Years'; ?>
 							<span class="handle"></span>
 						</button>
-						<input type="hidden" value="0" data-filter-option="year">
+						<input type="hidden" value="<?php echo $year; ?>" data-filter-option="year">
 						<ul class="dropdown-menu">
 							<li><a href="0">All Years</a></li>
-							<?php foreach($years as $year) : ?>
-							<li><a href="<?php echo $year->year;?>"><?php echo $year->year;?></a></li>
+							<?php foreach(file_years() as $y) : ?>
+							<li><a href="<?php echo $y->year;?>"><?php echo $y->year;?></a></li>
 							<?php endforeach; ?>
 						</ul>
 					</div>
@@ -83,6 +93,9 @@
 
 				<div class="file-list">
 					<div class="col-sm-12">
+						
+						<?php $user_files = get_user_files($category, $year, $perpage); if(!empty($user_files)) : ?>
+
 						<div class="row title-row">
 							<div class="col-xs-8 col-sm-8">
 								<strong>Title</strong>
@@ -95,7 +108,7 @@
 							</div>
 						</div>
 
-						<?php $index = 0; foreach(get_user_files() as $post_title => $post) : ?>
+						<?php $index = 0; foreach($user_files as $post_title => $post) : ?>
 
 							<div class="row file">
 								<div class="panel-group" id="accordion_<?php echo $post['files'][0]->file_post_id;?>" role="tablist">
@@ -138,6 +151,10 @@
 
 						<?php $index++; endforeach; ?>
 
+						<?php else : ?>
+							<h3>No files match this criteria.</h3>
+						<?php endif; ?>
+
 					</div>
 
 				</div>
@@ -151,15 +168,14 @@
 							class="btn btn-default dropdown-toggle"
 							type="button"
 							data-toggle="dropdown">
-							10 Results per page
+							<?php echo $resuls_array[$perpage]; ?>
 							<span class="handle"></span>
 						</button>
-						<input type="hidden" value="10" data-filter-option="perpage">
+						<input type="hidden" value="<?php echo $perpage; ?>" data-filter-option="perpage">
 						<ul class="dropdown-menu">
-							<li><a href="10">10 Results per page</a></li>
-							<li><a href="25">25 Results per page</a></li>
-							<li><a href="50">50 Results per page</a></li>
-							<li><a href="75">75 Results per page</a></li>
+							<?php foreach($resuls_array as $idx => $result) : ?>
+							<li><a href="<?php echo $idx; ?>"><?php echo $result; ?></a></li>
+							<?php endforeach; ?>
 						</ul>
 					</div>
 
