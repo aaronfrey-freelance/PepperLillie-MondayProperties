@@ -85,6 +85,18 @@ function human_filesize($bytes, $decimals = 2) {
     return sprintf("%.{$decimals}f", $bytes / pow(1024, $factor)) . ' ' . @$size[$factor];
 }
 
+function get_paging_info($tot_rows,$pp,$curr_page)
+{
+  $pages = ceil($tot_rows / $pp); // calc pages
+
+  $data = array(); // start out array
+  $data['si']        = ($curr_page * $pp) - $pp; // what row to start at
+  $data['pages']     = $pages;                   // add the pages
+  $data['curr_page'] = $curr_page;               // Whats the current page
+
+  return $data;
+}
+
 function file_cats() {
   global $wpdb;
   return $wpdb->get_results(
@@ -104,7 +116,7 @@ function file_years() {
   OBJECT);
 }
 
-function get_user_files($category = 0, $year = 0, $perpage = 10) {
+function get_user_files($category = 0, $year = 0, $perpage = 10, $curr_page = 0) {
 
   global $wpdb;
 
@@ -173,5 +185,10 @@ function get_user_files($category = 0, $year = 0, $perpage = 10) {
       $file->file_date;
   }
 
-  return array_slice($sorted_post_files, 0, $perpage);
+  $result = [
+    'total' => count($sorted_post_files),
+    'files' => array_slice($sorted_post_files, $curr_page, $perpage, true)
+  ];
+
+  return $result;
 }
