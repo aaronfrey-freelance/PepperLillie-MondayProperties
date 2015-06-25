@@ -12,7 +12,7 @@ use Roots\Sage\Wrapper;
     <?php
       do_action('get_header');
       
-      if(!is_page('investors')) {
+      if(!is_page('investors-new')) {
         get_template_part('templates/header');
       } else {
         get_template_part('templates/header', 'investors');

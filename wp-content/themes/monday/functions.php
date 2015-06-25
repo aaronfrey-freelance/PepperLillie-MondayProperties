@@ -49,8 +49,8 @@ function add_category_to_single($classes) {
 add_action( 'wp', 'redirect_visitors' );
 
 function redirect_visitors() {
-  if ( !is_user_logged_in() && is_page('investors') ) {
-      wp_redirect(wp_login_url(get_permalink(get_page_by_path('investors'))));
+  if ( !is_user_logged_in() && is_page('investors-new') ) {
+      wp_redirect(wp_login_url(get_permalink(get_page_by_path('investors-new'))));
       exit;
   }
 }
