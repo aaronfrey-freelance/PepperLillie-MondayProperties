@@ -2,7 +2,7 @@
 	$category 	= isset($_GET['category']) ? $_GET['category'] : 0;
 	$year 		= isset($_GET['fileyear']) ? $_GET['fileyear'] : 0;
 	$perpage 	= isset($_GET['perpage']) ? $_GET['perpage'] : 10;
-	$curr_page 	= isset($_GET['filepage']) ? $_GET['filepage'] : 0;
+	$curr_page 	= isset($_GET['filepage']) ? $_GET['filepage'] : 1;
 	
 	$user_files_array = get_user_files($category, $year, $perpage, $curr_page);
 	$user_files = $user_files_array['files'];
@@ -29,6 +29,12 @@
 	// var_dump($category);
 	// var_dump($year);
 	// var_dump($perpage);
+
+	if($curr_page != 0) {
+		$arr_params = array('filepage' => $curr_page);
+		$new_query = add_query_arg(['filepage' => $curr_page]);
+	}
+
 ?>
 
 <?php while (have_posts()) : the_post(); ?>
@@ -157,17 +163,14 @@
 
 						<?php $index++; endforeach; ?>
 
-						<!-- Create the query -->
-						<?php $count = $total_projects; ?>
-
 						<!-- Call our function from above -->
-						<?php $paging_info = get_paging_info($count, $perpage, $curr_page); ?>
+						<?php $paging_info = get_paging_info($total_projects, $perpage, $curr_page); ?>
 
 						<p>
 						    <!-- If the current page is more than 1, show the First and Previous links -->
 						    <?php if($paging_info['curr_page'] > 1) : ?>
-						        <a href='' title='Page 1'>First</a>
-						        <a href='' title='Page <?php echo ($paging_info['curr_page'] - 1); ?>'>Prev</a>
+						        <a href='<?php echo add_query_arg(["filepage" => 1]);?>' title='Page 1'>First</a>
+						        <a href='<?php echo add_query_arg(["filepage" => $paging_info["curr_page"]-1]);?>' title='Page <?php echo ($paging_info['curr_page'] - 1); ?>'>Prev</a>
 						    <?php endif; ?>
 
 						    <?php
@@ -183,7 +186,7 @@
 
 						    <!-- If the current page >= $max then show link to 1st page -->
 						    <?php if($paging_info['curr_page'] >= $max) : ?>
-						        <a href='' title='Page 1'>1</a>
+						        <a href='<?php echo add_query_arg(["filepage" => 1]);?>' title='Page 1'>1</a>
 						        ..
 						    <?php endif; ?>
 
@@ -201,7 +204,7 @@
 
 						        <?php else : ?>
 
-						            <a href='' title='Page <?php echo $i; ?>'><?php echo $i; ?></a>
+						            <a href='<?php echo add_query_arg(["filepage" => $i]);?>' title='Page <?php echo $i; ?>'><?php echo $i; ?></a>
 
 						        <?php endif; ?>
 
@@ -210,19 +213,19 @@
 						    <!-- If the current page is less than say the last page minus $max pages divided by 2-->
 						    <?php if($paging_info['curr_page'] < ($paging_info['pages'] - floor($max / 2))) : ?>
 						        ..
-						        <a href='' title='Page <?php echo $paging_info['pages']; ?>'><?php echo $paging_info['pages']; ?></a>
+						        <a href='<?php echo add_query_arg(["filepage" => $paging_info["pages"]]); ?>' title='Page <?php echo $paging_info['pages']; ?>'><?php echo $paging_info['pages']; ?></a>
 						    <?php endif; ?>
 
 						    <!-- Show last two pages if we're not near them -->
 						    <?php if($paging_info['curr_page'] < $paging_info['pages']) : ?>
 
-								<!-- <a 
-						        	href='<?php echo str_replace('/page'.$paging_info['curr_page'], '', $paging_info['curr_url']) . '/page'.($paging_info['curr_page'] + 1); ?>'
+								<a 
+						        	href='<?php echo add_query_arg(["filepage" => $paging_info["curr_page"] + 1]); ?>'
 						        	title='Page <?php echo ($paging_info['curr_page'] + 1); ?>'>Next</a>
 
 						        <a 
-						        	href='<?php echo str_replace('/page'.$paging_info['curr_page'], '', $paging_info['curr_url']) . '/page'.$paging_info['pages']; ?>'
-						        	title='Page <?php echo $paging_info['pages']; ?>'>Last</a> -->
+						        	href='<?php echo add_query_arg(["filepage" => $paging_info["pages"]]); ?>'
+						        	title='Page <?php echo $paging_info['pages']; ?>'>Last</a>
 
 						    <?php endif; ?>
 						</p>

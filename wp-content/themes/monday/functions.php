@@ -116,7 +116,7 @@ function file_years() {
   OBJECT);
 }
 
-function get_user_files($category = 0, $year = 0, $perpage = 10, $curr_page = 0) {
+function get_user_files($category = 0, $year = 0, $perpage = 10, $curr_page = 1) {
 
   global $wpdb;
 
@@ -187,7 +187,7 @@ function get_user_files($category = 0, $year = 0, $perpage = 10, $curr_page = 0)
 
   $result = [
     'total' => count($sorted_post_files),
-    'files' => array_slice($sorted_post_files, $curr_page, $perpage, true)
+    'files' => array_slice($sorted_post_files, $curr_page - 1, $perpage, true)
   ];
 
   return $result;
