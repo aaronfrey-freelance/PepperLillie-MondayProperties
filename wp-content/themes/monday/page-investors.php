@@ -1,22 +1,4 @@
 <?php
-
-	function human_filesize($bytes, $decimals = 2) {
-	    $size = array('B','kB','MB','GB','TB','PB','EB','ZB','YB');
-	    $factor = floor((strlen($bytes) - 1) / 3);
-	    return sprintf("%.{$decimals}f", $bytes / pow(1024, $factor)) . ' ' . @$size[$factor];
-	}
-
-	$roles_where = '';
-
-	// Get the current users username
-	global $current_user;
-    get_currentuserinfo();
-
-    // Get the current users roles
-	foreach($current_user->roles as $role ) {
-		$roles_where .= " OR find_in_set('$role', REPLACE(file_user_roles,'|',',')) <> 0";
-	}
-
 	global $wpdb;
 
 	$cats = $wpdb->get_results(
@@ -31,47 +13,6 @@
 		FROM wp_wpfb_files
 		ORDER BY year ASC',
 	OBJECT);
-
-	// Select all of the files that meet the following criteria:
-	// 1. Everyone is allowed to view the file
-	// 2. The current user is explicitly allowed to view the file
-	// 3. The user is attached to a role that is allowed to view the file
-	$files = $wpdb->get_results(
-		"SELECT
-			wp_wpfb_files.file_name,
-			wp_wpfb_files.file_size,
-			wp_wpfb_files.file_path,
-			wp_wpfb_files.file_date,
-			wp_wpfb_files.file_post_id,
-			wp_posts.post_title,
-			wp_posts.post_date
-		FROM wp_wpfb_files
-		LEFT JOIN wp_posts ON wp_posts.ID = wp_wpfb_files.file_post_id
-		WHERE find_in_set('_u_$current_user->user_login', REPLACE(file_user_roles,'|',',')) <> 0
-		OR file_user_roles = ''
-		$roles_where
-		ORDER BY
-			wp_posts.post_title ASC,
-			wp_wpfb_files.file_name ASC", 
-	OBJECT);
-
-	$sorted_post_files = [];
-
-	foreach ($files as $file) {
-		$sorted_post_files[$file->post_title]['files'][] = $file;
-
-		// Get the total file size of all files
-		$sorted_post_files[$file->post_title]['size'] =
-			array_key_exists('size', $sorted_post_files[$file->post_title]) ?
-			$sorted_post_files[$file->post_title]['size'] + intval($file->file_size) :
-			intval($file->file_size);
-
-		// Get the last time this project was modified
-		$sorted_post_files[$file->post_title]['modified'] =
-			array_key_exists('modified', $sorted_post_files[$file->post_title]) ?
-			($sorted_post_files[$file->post_title]['modified'] > $file->file_date ? $sorted_post_files[$file->post_title]['modified'] : $file->file_date) :
-			$file->file_date;
-	}
 ?>
 
 <?php while (have_posts()) : the_post(); ?>
@@ -154,7 +95,7 @@
 							</div>
 						</div>
 
-						<?php $index = 0; foreach($sorted_post_files as $post_title => $post) : ?>
+						<?php $index = 0; foreach(get_user_files() as $post_title => $post) : ?>
 
 							<div class="row file">
 								<div class="panel-group" id="accordion_<?php echo $post['files'][0]->file_post_id;?>" role="tablist">

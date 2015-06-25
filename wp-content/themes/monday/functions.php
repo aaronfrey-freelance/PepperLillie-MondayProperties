@@ -72,6 +72,80 @@ add_action( 'wp_ajax_my_action', 'my_action_callback' );
 add_action( 'wp_ajax_nopriv_my_action', 'my_action_callback' );
 
 function my_action_callback() {
-  echo json_encode('THIS IS A TEST');
+  $category = $_POST['category'];
+  $year = $_POST['year'];
+  $perpage = $_POST['perpage'];
+  echo json_encode(get_user_files($category, $year, $perpage));
   die();
+}
+
+function human_filesize($bytes, $decimals = 2) {
+    $size = array('B','kB','MB','GB','TB','PB','EB','ZB','YB');
+    $factor = floor((strlen($bytes) - 1) / 3);
+    return sprintf("%.{$decimals}f", $bytes / pow(1024, $factor)) . ' ' . @$size[$factor];
+}
+
+function get_user_files($category = 0, $year = 0, $perpage = 10) {
+
+  global $wpdb;
+
+  // Get the current users username
+  global $current_user;
+  get_currentuserinfo();
+
+  // Should we get files by a category
+  $category_join = '';
+  if($category) {
+    $category_join = " JOIN wp_wpfb_cats ON wp_wpfb_cats.cat_id = wp_wpfb_files.file_category AND wp_wpfb_cats.cat_id = $category ";
+  }
+
+  // Get the current users roles
+  $roles_where = '';
+  foreach($current_user->roles as $role ) {
+    $roles_where .= " OR find_in_set('$role', REPLACE(file_user_roles,'|',',')) <> 0 ";
+  }
+
+  // Select all of the files that meet the following criteria:
+  // 1. Everyone is allowed to view the file
+  // 2. The current user is explicitly allowed to view the file
+  // 3. The user is attached to a role that is allowed to view the file
+  $files = $wpdb->get_results(
+    "SELECT
+      wp_wpfb_files.file_name,
+      wp_wpfb_files.file_size,
+      wp_wpfb_files.file_path,
+      wp_wpfb_files.file_date,
+      wp_wpfb_files.file_post_id,
+      wp_posts.post_title,
+      wp_posts.post_date
+    FROM wp_wpfb_files
+    LEFT JOIN wp_posts ON wp_posts.ID = wp_wpfb_files.file_post_id
+    $category_join
+    WHERE find_in_set('_u_$current_user->user_login', REPLACE(file_user_roles,'|',',')) <> 0
+    OR file_user_roles = ''
+    $roles_where
+    ORDER BY
+      wp_posts.post_title ASC,
+      wp_wpfb_files.file_name ASC", 
+  OBJECT);
+
+  $sorted_post_files = [];
+
+  foreach ($files as $file) {
+    $sorted_post_files[$file->post_title]['files'][] = $file;
+
+    // Get the total file size of all files
+    $sorted_post_files[$file->post_title]['size'] =
+      array_key_exists('size', $sorted_post_files[$file->post_title]) ?
+      $sorted_post_files[$file->post_title]['size'] + intval($file->file_size) :
+      intval($file->file_size);
+
+    // Get the last time this project was modified
+    $sorted_post_files[$file->post_title]['modified'] =
+      array_key_exists('modified', $sorted_post_files[$file->post_title]) ?
+      ($sorted_post_files[$file->post_title]['modified'] > $file->file_date ? $sorted_post_files[$file->post_title]['modified'] : $file->file_date) :
+      $file->file_date;
+  }
+
+  return $sorted_post_files;
 }
