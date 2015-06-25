@@ -99,6 +99,12 @@ function get_user_files($category = 0, $year = 0, $perpage = 10) {
     $category_join = " JOIN wp_wpfb_cats ON wp_wpfb_cats.cat_id = wp_wpfb_files.file_category AND wp_wpfb_cats.cat_id = $category ";
   }
 
+  // Should we get files by a specific year
+  $year_where = '';
+  if($year) {
+    $year_where = " AND YEAR(wp_wpfb_files.file_date) = $year ";
+  }
+
   // Get the current users roles
   $roles_where = '';
   foreach($current_user->roles as $role ) {
@@ -121,8 +127,8 @@ function get_user_files($category = 0, $year = 0, $perpage = 10) {
     FROM wp_wpfb_files
     LEFT JOIN wp_posts ON wp_posts.ID = wp_wpfb_files.file_post_id
     $category_join
-    WHERE find_in_set('_u_$current_user->user_login', REPLACE(file_user_roles,'|',',')) <> 0
-    OR file_user_roles = ''
+    WHERE (find_in_set('_u_$current_user->user_login', REPLACE(file_user_roles,'|',',')) <> 0 OR file_user_roles = '')
+    $year_where
     $roles_where
     ORDER BY
       wp_posts.post_title ASC,

@@ -11,7 +11,7 @@
 	$years = $wpdb->get_results(
 		'SELECT DISTINCT YEAR(file_date) AS year
 		FROM wp_wpfb_files
-		ORDER BY year ASC',
+		ORDER BY year DESC',
 	OBJECT);
 ?>
 
