@@ -35,6 +35,8 @@
 		$new_query = add_query_arg(['filepage' => $curr_page]);
 	}
 
+
+
 ?>
 
 <?php while (have_posts()) : the_post(); ?>
@@ -166,10 +168,10 @@
 						<!-- Call our function from above -->
 						<?php $paging_info = get_paging_info($total_projects, $perpage, $curr_page); ?>
 
-						<p>
+						<p class="file-pagination">
 						    <!-- If the current page is more than 1, show the First and Previous links -->
 						    <?php if($paging_info['curr_page'] > 1) : ?>
-						        <a href='<?php echo add_query_arg(["filepage" => 1]);?>' title='Page 1'>First</a>
+						        <a class="nextlast" href='<?php echo add_query_arg(["filepage" => 1]);?>' title='Page 1'>First<span>|</span></a>
 						        <a href='<?php echo add_query_arg(["filepage" => $paging_info["curr_page"]-1]);?>' title='Page <?php echo ($paging_info['curr_page'] - 1); ?>'>Prev</a>
 						    <?php endif; ?>
 
@@ -200,8 +202,9 @@
 
 						        <?php if($paging_info['curr_page'] == $i) : ?>
 
-						            <span class='bold'><?php echo $i; ?></span>
-
+						        	<?php if($paging_info["pages"] != 1) : ?>
+						            <span class='active'><?php echo $i; ?></span>
+						        	<?php endif; ?>
 						        <?php else : ?>
 
 						            <a href='<?php echo add_query_arg(["filepage" => $i]);?>' title='Page <?php echo $i; ?>'><?php echo $i; ?></a>
@@ -220,8 +223,9 @@
 						    <?php if($paging_info['curr_page'] < $paging_info['pages']) : ?>
 
 								<a 
+									class="nextlast"
 						        	href='<?php echo add_query_arg(["filepage" => $paging_info["curr_page"] + 1]); ?>'
-						        	title='Page <?php echo ($paging_info['curr_page'] + 1); ?>'>Next</a>
+						        	title='Page <?php echo ($paging_info['curr_page'] + 1); ?>'>Next<span>|</span></a>
 
 						        <a 
 						        	href='<?php echo add_query_arg(["filepage" => $paging_info["pages"]]); ?>'
