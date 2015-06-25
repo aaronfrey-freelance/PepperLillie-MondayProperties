@@ -3,6 +3,7 @@
 	$year 		= isset($_GET['fileyear']) ? $_GET['fileyear'] : 0;
 	$perpage 	= isset($_GET['perpage']) ? $_GET['perpage'] : 10;
 	$curr_page 	= isset($_GET['filepage']) ? $_GET['filepage'] : 1;
+	$upload_dir = wp_upload_dir();
 	
 	$user_files_array = get_user_files($category, $year, $perpage, $curr_page);
 	$user_files = $user_files_array['files'];
@@ -146,16 +147,17 @@
 										<div id="collapse_<?php echo $post['files'][0]->file_post_id;?>" class="panel-collapse collapse">
 											<div class="panel-body <?php echo $index % 2 != 0 ? '' : 'odd'; ?>">
 												<?php foreach($post['files'] as $file) : ?>
-												<div class="col-xs-8 col-sm-8">
-													<p class="file-name">- <?php echo $file->file_name; ?></p>
-												</div>
-												<div class="hidden-xs col-sm-2">
-
-													<strong><?php echo human_filesize($file->file_size); ?></strong>
-												</div>
-												<div class="col-xs-4 col-sm-2">
-													<p><?php echo date('m/d/Y', strtotime($file->file_date)); ?></p>
-												</div>
+												<a target="_blank" href="<?php echo $upload_dir['baseurl'] . '/filebase/' . $file->file_path; ?>">
+													<div class="col-xs-8 col-sm-8">
+														<p class="file-name">- <?php echo $file->file_name; ?></p>
+													</div>
+													<div class="hidden-xs col-sm-2">
+														<strong><?php echo human_filesize($file->file_size); ?></strong>
+													</div>
+													<div class="col-xs-4 col-sm-2">
+														<p><?php echo date('m/d/Y', strtotime($file->file_date)); ?></p>
+													</div>
+												</a>
 												<?php endforeach; ?>
 											</div>
 										</div>

@@ -153,6 +153,7 @@ function get_user_files($category = 0, $year = 0, $perpage = 10, $curr_page = 1)
       wp_wpfb_files.file_path,
       wp_wpfb_files.file_date,
       wp_wpfb_files.file_post_id,
+      wp_wpfb_files.file_path,
       wp_posts.post_title,
       wp_posts.post_date
     FROM wp_wpfb_files
