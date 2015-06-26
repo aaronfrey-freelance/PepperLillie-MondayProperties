@@ -2,6 +2,7 @@
 
 	<div class="footertext">
 		&copy; 2015 Monday Properties.  All Rights Reserved  &nbsp; | &nbsp;<a href="<?php bloginfo('url'); ?>/contact">Contact Us</a>
+		<span class="hidden-xs">&nbsp; | &nbsp;<a href="<?php bloginfo('url'); ?>/careers">Careers</a></span>
 	</div>
 
 	<div class="socialmedia">
