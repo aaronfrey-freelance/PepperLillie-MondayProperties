@@ -6,7 +6,6 @@
         "scripts/jquery.easing.1.3.js",
         "scripts/jquery.animate-enhanced.min.js",
         "scripts/jquery.superslides.js",
-        //"scripts/handlebars-v3.0.3.js",
         "scripts/main.js"
       ],
       "main": true

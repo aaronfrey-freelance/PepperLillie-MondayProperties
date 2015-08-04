@@ -102,7 +102,7 @@
             'value': $('[data-filter-option="perpage"]').val()
         });
 
-        window.location.href = window.home_url + '/investors/?' + $.param(params);
+        window.location.href = window.location.href + '?' + $.param(params);
 
         // var data = {
         //    action: 'my_action',

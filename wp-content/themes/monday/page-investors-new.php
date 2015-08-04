@@ -1,4 +1,5 @@
 <?php
+
 	$category 	= isset($_GET['category']) ? $_GET['category'] : 0;
 	$year 		= isset($_GET['fileyear']) ? $_GET['fileyear'] : 0;
 	$perpage 	= isset($_GET['perpage']) ? $_GET['perpage'] : 10;
@@ -35,9 +36,6 @@
 		$arr_params = array('filepage' => $curr_page);
 		$new_query = add_query_arg(['filepage' => $curr_page]);
 	}
-
-
-
 ?>
 
 <?php while (have_posts()) : the_post(); ?>
