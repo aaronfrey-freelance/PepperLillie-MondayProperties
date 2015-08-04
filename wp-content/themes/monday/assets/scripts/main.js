@@ -102,7 +102,13 @@
             'value': $('[data-filter-option="perpage"]').val()
         });
 
-        window.location.href = window.location.href + '?' + $.param(params);
+        var currentUrl = window.location.href;
+
+        if(currentUrl.indexOf('?') != -1) {
+            currentUrl = currentUrl.substr(0, currentUrl.indexOf('?'));
+        }
+
+        window.location.href = currentUrl + '?' + $.param(params);
 
         // var data = {
         //    action: 'my_action',
