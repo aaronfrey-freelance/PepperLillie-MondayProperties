@@ -163,7 +163,7 @@ function get_user_files($category = 0, $year = 0, $perpage = 10, $curr_page = 1)
     $year_where
     ORDER BY
       wp_posts.post_title ASC,
-      wp_wpfb_files.file_name ASC", 
+      wp_wpfb_files.file_date ASC", 
   OBJECT);
 
   //echo('<pre>'.$wpdb->last_query.'</pre>');
