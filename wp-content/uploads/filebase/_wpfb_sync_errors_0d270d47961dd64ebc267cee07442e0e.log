@@ -448,3 +448,6 @@
 [24-Jun-2015 17:33:32 UTC] PHP  26. WP_User->has_cap() /Users/aaronfrey/Sites/Freelance/PepperLillie-Monday/wp-includes/capabilities.php:1393
 [24-Jun-2015 17:33:32 UTC] PHP  27. call_user_func_array:{/Users/aaronfrey/Sites/Freelance/PepperLillie-Monday/wp-includes/capabilities.php:999}() /Users/aaronfrey/Sites/Freelance/PepperLillie-Monday/wp-includes/capabilities.php:999
 [24-Jun-2015 17:33:32 UTC] PHP  28. map_meta_cap() /Users/aaronfrey/Sites/Freelance/PepperLillie-Monday/wp-includes/capabilities.php:999
+
+====================
+INIT SYNC

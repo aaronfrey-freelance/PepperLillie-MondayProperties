@@ -315,7 +315,7 @@ class Mixin_Form_Field_Generators extends Mixin
     {
         $hidden = !(isset($display_type->settings['override_thumbnail_settings']) ? $display_type->settings['override_thumbnail_settings'] : FALSE);
         $override_field = $this->_render_radio_field($display_type, 'override_thumbnail_settings', __('Override thumbnail settings', 'nggallery'), isset($display_type->settings['override_thumbnail_settings']) ? $display_type->settings['override_thumbnail_settings'] : FALSE, __('This does not affect existing thumbnails; overriding the thumbnail settings will create an additional set of thumbnails. To change the size of existing thumbnails please visit \'Manage Galleries\' and choose \'Create new thumbnails\' for all images in the gallery.', 'nggallery'));
-        $dimensions_field = $this->object->render_partial('photocrati-nextgen_admin#field_generator/thumbnail_settings', array('display_type_name' => $display_type->name, 'name' => 'thumbnail_dimensions', 'label' => __('Thumbnail dimensions', 'nggallery'), 'thumbnail_width' => isset($display_type->settings['thumbnail_width']) ? $display_type->settings['thumbnail_width'] : 0, 'thumbnail_height' => isset($display_type->settings['thumbnail_height']) ? $display_type->settings['thumbnail_height'] : 0, 'hidden' => $hidden ? 'hidden' : '', 'text' => ''), TRUE);
+        $dimensions_field = $this->object->render_partial('photocrati-nextgen_admin#field_generator/thumbnail_settings', array('display_type_name' => $display_type->name, 'name' => 'thumbnail_dimensions', 'label' => __('Thumbnail dimensions', 'nggallery'), 'thumbnail_width' => isset($display_type->settings['thumbnail_width']) ? intval($display_type->settings['thumbnail_width']) : 0, 'thumbnail_height' => isset($display_type->settings['thumbnail_height']) ? intval($display_type->settings['thumbnail_height']) : 0, 'hidden' => $hidden ? 'hidden' : '', 'text' => ''), TRUE);
         /*
         $qualities = array();
         for ($i = 100; $i > 40; $i -= 5) { $qualities[$i] = "{$i}%"; }
@@ -710,6 +710,14 @@ class Mixin_NextGen_Admin_Page_Instance_Methods extends Mixin
     {
         return 'photocrati-nextgen_admin#nextgen_admin_page';
     }
+    /**
+     * Returns a list of parameters to include when rendering the view
+     * @return array
+     */
+    public function get_index_params()
+    {
+        return array();
+    }
     public function show_save_button()
     {
         return TRUE;
@@ -755,7 +763,9 @@ class Mixin_NextGen_Admin_Page_Instance_Methods extends Mixin
                 }
             }
             // Render the view
-            $this->render_partial($this->object->index_template(), array('page_heading' => $this->object->get_page_heading(), 'tabs' => $tabs, 'errors' => $errors, 'success' => $success, 'form_header' => $token->get_form_html(), 'show_save_button' => $this->object->show_save_button(), 'model' => $this->object->has_method('get_model') ? $this->get_model() : NULL));
+            $index_params = array('page_heading' => $this->object->get_page_heading(), 'tabs' => $tabs, 'errors' => $errors, 'success' => $success, 'form_header' => $token->get_form_html(), 'show_save_button' => $this->object->show_save_button(), 'model' => $this->object->has_method('get_model') ? $this->get_model() : NULL);
+            $index_params = array_merge($index_params, $this->object->get_index_params());
+            $this->render_partial($this->object->index_template(), $index_params);
         } else {
             $this->render_view('photocrati-nextgen_admin#not_authorized', array('name' => $this->object->name, 'title' => $this->object->get_page_title()));
         }
