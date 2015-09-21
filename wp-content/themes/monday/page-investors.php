@@ -14,7 +14,7 @@
 	$file_cats = file_cats();
 	$cat_name = 'All Documents';
 	foreach ($file_cats as $cat) {
-		if($cat->cat_id == $category) {
+		if($cat->cat_name == $category) {
 			$cat_name = $cat->cat_name;
 			break;
 		}
@@ -68,7 +68,7 @@
 						<ul class="dropdown-menu">
 							<li><a href="0">All Documents</a></li>
 							<?php foreach($file_cats as $cat) : ?>
-							<li><a href="<?php echo $cat->cat_id;?>"><?php echo $cat->cat_name;?></a></li>
+							<li><a href="<?php echo $cat->cat_name;?>"><?php echo $cat->cat_name;?></a></li>
 							<?php endforeach; ?>
 						</ul>
 					</div>

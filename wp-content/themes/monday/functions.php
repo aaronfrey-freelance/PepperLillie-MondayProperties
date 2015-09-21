@@ -100,7 +100,7 @@ function get_paging_info($tot_rows,$pp,$curr_page)
 function file_cats() {
   global $wpdb;
   return $wpdb->get_results(
-    'SELECT DISTINCT cat_id, cat_name
+    'SELECT DISTINCT cat_name
     FROM wp_wpfb_cats
     JOIN wp_wpfb_files ON wp_wpfb_files.file_category = wp_wpfb_cats.cat_id
     WHERE wp_wpfb_cats.cat_parent <> 0
@@ -128,7 +128,7 @@ function get_user_files($category = 0, $year = 0, $perpage = 10, $curr_page = 1)
   // Should we get files by a category
   $category_join = '';
   if($category) {
-    $category_join = "JOIN wp_wpfb_cats ON wp_wpfb_cats.cat_id = wp_wpfb_files.file_category AND wp_wpfb_cats.cat_id = $category";
+    $category_join = "JOIN wp_wpfb_cats ON wp_wpfb_cats.cat_id = wp_wpfb_files.file_category AND wp_wpfb_cats.cat_name = '$category'";
   }
 
   // Should we get files by a specific year
@@ -155,6 +155,7 @@ function get_user_files($category = 0, $year = 0, $perpage = 10, $curr_page = 1)
       wp_wpfb_files.file_date,
       wp_wpfb_files.file_path
     FROM wp_wpfb_files
+    $category_join
     WHERE (find_in_set('_u_$current_user->user_login', REPLACE(file_user_roles,'|',',')) <> 0 OR file_user_roles = '' $roles_where)
     $year_where
     ORDER BY
