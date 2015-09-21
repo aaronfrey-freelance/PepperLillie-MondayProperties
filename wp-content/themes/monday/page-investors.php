@@ -13,10 +13,12 @@
 	// Get the category name
 	$file_cats = file_cats();
 	$cat_name = 'All Documents';
-	foreach ($file_cats as $cat) {
-		if($cat->cat_name == $category) {
-			$cat_name = $cat->cat_name;
-			break;
+	if($category) {
+		foreach ($file_cats as $cat) {
+			if($cat->cat_name == $category) {
+				$cat_name = $cat->cat_name;
+				break;
+			}
 		}
 	}
 
