@@ -105,6 +105,7 @@
 				?>
 
 				<div class="file-list">
+
 					<div class="col-sm-12">
 						
 						<?php if(!empty($user_files)) : ?>
@@ -124,11 +125,11 @@
 						<?php $index = 0; foreach($user_files as $post_title => $post) : ?>
 
 							<div class="row file">
-								<div class="panel-group" id="accordion_<?php echo $post['files'][0]->file_post_id;?>" role="tablist">
+								<div class="panel-group" id="accordion_<?php echo $index;?>" role="tablist">
 									<div class="panel panel-default">
 										<div class="panel-heading <?php echo $index % 2 != 0 ? '' : 'odd'; ?>" role="tab">
 											<h4 class="panel-title">
-												<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion_<?php echo $post['files'][0]->file_post_id;?>" href="#collapse_<?php echo $post['files'][0]->file_post_id;?>">
+												<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion_<?php echo $index;?>" href="#collapse_<?php echo $index;?>">
 													<div class="col-xs-8 col-sm-8">
 														<i class="arrow pull-left"></i>
 														<p class="title"><?php echo $post_title; ?></p>
@@ -142,7 +143,7 @@
 												</a>
 											</h4>
 										</div>
-										<div id="collapse_<?php echo $post['files'][0]->file_post_id;?>" class="panel-collapse collapse">
+										<div id="collapse_<?php echo $index;?>" class="panel-collapse collapse">
 											<div class="panel-body <?php echo $index % 2 != 0 ? '' : 'odd'; ?>">
 												<?php foreach($post['files'] as $file) : ?>
 												<a href="<?php echo site_url() . '/download/' . $file->file_path; ?>">

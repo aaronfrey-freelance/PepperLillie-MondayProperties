@@ -46,12 +46,12 @@ function add_category_to_single($classes) {
   return $classes;
 }
 
-add_action( 'wp', 'redirect_visitors' );
+add_action('wp', 'redirect_visitors');
 
 function redirect_visitors() {
-  if ( !is_user_logged_in() && is_page('investors-new') ) {
-      wp_redirect(wp_login_url(get_permalink(get_page_by_path('investors-new'))));
-      exit;
+  if (!is_user_logged_in() && is_page('investors')) {
+    wp_redirect(wp_login_url(get_permalink(get_page_by_path('investors'))));
+    exit;
   }
 }
 
@@ -68,8 +68,8 @@ function my_login_head() {
   ";
 }
 
-add_action( 'wp_ajax_my_action', 'my_action_callback' );
-add_action( 'wp_ajax_nopriv_my_action', 'my_action_callback' );
+add_action('wp_ajax_my_action', 'my_action_callback');
+add_action('wp_ajax_nopriv_my_action', 'my_action_callback');
 
 function my_action_callback() {
   $category = $_POST['category'];
@@ -80,9 +80,9 @@ function my_action_callback() {
 }
 
 function human_filesize($bytes, $decimals = 2) {
-    $size = array('B','kB','MB','GB','TB','PB','EB','ZB','YB');
-    $factor = floor((strlen($bytes) - 1) / 3);
-    return sprintf("%.{$decimals}f", $bytes / pow(1024, $factor)) . ' ' . @$size[$factor];
+  $size = array('B','kB','MB','GB','TB','PB','EB','ZB','YB');
+  $factor = floor((strlen($bytes) - 1) / 3);
+  return sprintf("%.{$decimals}f", $bytes / pow(1024, $factor)) . ' ' . @$size[$factor];
 }
 
 function get_paging_info($tot_rows,$pp,$curr_page)
@@ -103,6 +103,7 @@ function file_cats() {
     'SELECT DISTINCT cat_id, cat_name
     FROM wp_wpfb_cats
     JOIN wp_wpfb_files ON wp_wpfb_files.file_category = wp_wpfb_cats.cat_id
+    WHERE wp_wpfb_cats.cat_parent <> 0
     ORDER BY cat_name ASC',
   OBJECT);
 }
@@ -152,43 +153,43 @@ function get_user_files($category = 0, $year = 0, $perpage = 10, $curr_page = 1)
       wp_wpfb_files.file_size,
       wp_wpfb_files.file_path,
       wp_wpfb_files.file_date,
-      wp_wpfb_files.file_post_id,
-      wp_wpfb_files.file_path,
-      wp_posts.post_title,
-      wp_posts.post_date
+      wp_wpfb_files.file_path
     FROM wp_wpfb_files
-    LEFT JOIN wp_posts ON wp_posts.ID = wp_wpfb_files.file_post_id
-    $category_join
     WHERE (find_in_set('_u_$current_user->user_login', REPLACE(file_user_roles,'|',',')) <> 0 OR file_user_roles = '' $roles_where)
     $year_where
     ORDER BY
-      wp_posts.post_title ASC,
+      wp_wpfb_files.file_path ASC,
       wp_wpfb_files.file_date ASC", 
   OBJECT);
 
   //echo('<pre>'.$wpdb->last_query.'</pre>');
 
-  $sorted_post_files = [];
+  $sorted_files = [];
 
   foreach ($files as $file) {
-    $sorted_post_files[$file->post_title]['files'][] = $file;
+
+    // Get the Categories
+    $categories = explode('/', $file->file_path);
+    $parent_folder_name = count($categories) === 1 ? 'uncategorized' : $categories[0];
+
+    $sorted_files[$parent_folder_name]['files'][] = $file;
 
     // Get the total file size of all files
-    $sorted_post_files[$file->post_title]['size'] =
-      array_key_exists('size', $sorted_post_files[$file->post_title]) ?
-      $sorted_post_files[$file->post_title]['size'] + intval($file->file_size) :
+    $sorted_files[$parent_folder_name]['size'] =
+      array_key_exists('size', $sorted_files[$parent_folder_name]) ?
+      $sorted_files[$parent_folder_name]['size'] + intval($file->file_size) :
       intval($file->file_size);
 
     // Get the last time this project was modified
-    $sorted_post_files[$file->post_title]['modified'] =
-      array_key_exists('modified', $sorted_post_files[$file->post_title]) ?
-      ($sorted_post_files[$file->post_title]['modified'] > $file->file_date ? $sorted_post_files[$file->post_title]['modified'] : $file->file_date) :
+    $sorted_files[$parent_folder_name]['modified'] =
+      array_key_exists('modified', $sorted_files[$parent_folder_name]) ?
+      ($sorted_files[$parent_folder_name]['modified'] > $file->file_date ? $sorted_files[$parent_folder_name]['modified'] : $file->file_date) :
       $file->file_date;
   }
 
   $result = [
-    'total' => count($sorted_post_files),
-    'files' => array_slice($sorted_post_files, $curr_page - 1, $perpage, true)
+    'total' => count($sorted_files),
+    'files' => array_slice($sorted_files, ($curr_page - 1) * $perpage, $perpage, true)
   ];
 
   return $result;
