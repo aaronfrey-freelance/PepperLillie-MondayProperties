@@ -195,3 +195,14 @@ function get_user_files($category = 0, $year = 0, $perpage = 10, $curr_page = 1)
 
   return $result;
 }
+
+function searchfilter($query) {
+
+  if($query->is_search && !is_admin()) {
+      $query->set('post_type', array('post','page'));
+  }
+
+  return $query;
+}
+
+add_filter('pre_get_posts','searchfilter');
