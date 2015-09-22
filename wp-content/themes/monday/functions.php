@@ -196,13 +196,22 @@ function get_user_files($category = 0, $year = 0, $perpage = 10, $curr_page = 1)
   return $result;
 }
 
-function searchfilter($query) {
+/**
+ * Redirect all search requests to the home page
+ */
+function fb_filter_query($query, $error = true) {
 
-  if($query->is_search && !is_admin()) {
-      $query->set('post_type', array('post','page'));
+  if(is_search()) {
+    $query->is_search = false;
+    $query->query_vars['s'] = false;
+    $query->query['s'] = false;
+
+    // to error
+    if ($error == true)
+      wp_redirect(home_url());
+      exit;
+    }
   }
 
-  return $query;
-}
-
-add_filter('pre_get_posts','searchfilter');
+add_action('parse_query', 'fb_filter_query');
+add_filter('get_search_form', create_function('$a', "return null;"));
