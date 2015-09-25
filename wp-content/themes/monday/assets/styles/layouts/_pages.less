@@ -1,6 +1,7 @@
 /**
  * 404
  */
+
 .error404 {
     background-color: #1d3c57;
     .navbar-default {
@@ -74,6 +75,8 @@
         }
     }
 }
+
+
 /**
  * Case Studies
  */
@@ -101,7 +104,8 @@
             min-width: 31px;
             line-height: 31px;
             text-decoration: none;
-            &.active, &:hover {
+            &.active,
+            &:hover {
                 opacity: 1;
             }
         }
@@ -126,6 +130,8 @@
         background-color: #bfe8f9;
     }
 }
+
+
 /**
  * Contact
  */
@@ -167,6 +173,8 @@
         }
     }
 }
+
+
 /**
  * Team
  */
@@ -235,11 +243,32 @@
         }
     }
 }
+
+
 /**
  * Investors
  */
 
 .investors {
+    .subfolder {
+        clear: both;
+        a {
+            display: block;
+            text-decoration: none;
+            padding-left: 35px;
+        }
+        .subitem {
+            padding-left: 27px;
+            a {
+                margin-left: 35px;
+            }
+        }
+        img {
+            width: 25px;
+            position: relative;
+            top: 6px;
+        }
+    }
     background: #f5f5f5;
     color: #000;
     h2 {
@@ -363,10 +392,8 @@
                                 .arrow {
                                     -ms-transform: rotate(-90deg);
                                     /* IE 9 */
-                                    
                                     -webkit-transform: rotate(-90deg);
                                     /* Chrome, Safari, Opera */
-                                    
                                     transform: rotate(-90deg);
                                 }
                             }
@@ -398,10 +425,8 @@
                 height: 7px;
                 -ms-transform: rotate(0deg);
                 /* IE 9 */
-                
                 -webkit-transform: rotate(0deg);
                 /* Chrome, Safari, Opera */
-                
                 transform: rotate(0deg);
             }
         }
@@ -417,7 +442,6 @@
             float: right;
         }
     }
-
     .file-pagination {
         margin-top: 10px;
         a {
@@ -440,11 +464,9 @@
             margin-right: 10px;
         }
     }
-
 }
 
 @media only screen and (max-width: 479px) {
-
     .investors-new {
         h2 {
             margin-top: 10px;

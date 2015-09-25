@@ -109,19 +109,6 @@
         }
 
         window.location.href = currentUrl + '?' + $.param(params);
-
-        // var data = {
-        //    action: 'my_action',
-        //    category: $('[data-filter-option="category"]').val(),
-        //    year: $('[data-filter-option="year"]').val(),
-        //    perpage: $('[data-filter-option="perpage"]').val()
-        // };
-
-        // $.post(ajaxurl, data, function(response) {
-        //    var result = $.parseJSON(response);
-        //    console.log(result);
-        //    if (!result.error) {}
-        // });
     });
 
-})(jQuery); // Fully reference jQuery after this point.
+})(jQuery);

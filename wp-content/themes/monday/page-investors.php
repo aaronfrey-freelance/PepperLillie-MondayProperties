@@ -124,46 +124,115 @@
 							</div>
 						</div>
 
-						<?php $index = 0; foreach($user_files as $post_title => $post) : ?>
+						<?php //echo '<pre>'; ?>
+						<?php //print_r($user_files['1000 Wilson Boulevard']); ?>
+						<?php //echo '</pre>'; ?>
+
+						<?php $index = 0; foreach($user_files as $project_title => $project_items) : ?>
 
 							<div class="row file">
+
 								<div class="panel-group" id="accordion_<?php echo $index;?>" role="tablist">
+
 									<div class="panel panel-default">
+
 										<div class="panel-heading <?php echo $index % 2 != 0 ? '' : 'odd'; ?>" role="tab">
+
 											<h4 class="panel-title">
-												<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion_<?php echo $index;?>" href="#collapse_<?php echo $index;?>">
+
+												<a
+													class="collapsed"
+													role="button"
+													data-toggle="collapse"
+													data-parent="#accordion_<?php echo $index;?>" href="#collapse_<?php echo $index;?>">
+
 													<div class="col-xs-8 col-sm-8">
 														<i class="arrow pull-left"></i>
-														<p class="title"><?php echo $post_title; ?></p>
+														<p class="title"><?php echo $project_title; ?></p>
 													</div>
 													<div class="hidden-xs col-sm-2">
-														<strong><?php echo human_filesize($post['size']); ?></strong>
+														<strong><?php echo human_filesize($user_files_array['meta_size'][$project_title]); ?></strong>
 													</div>
 													<div class="col-xs-4 col-sm-2">
-														<p><?php echo date('m/d/Y', strtotime($post['modified'])); ?></p>
+														<p><?php echo date('m/d/Y', strtotime($user_files_array['meta_modified'][$project_title])); ?></p>
 													</div>
+
 												</a>
+
 											</h4>
 										</div>
+
 										<div id="collapse_<?php echo $index;?>" class="panel-collapse collapse">
+
 											<div class="panel-body <?php echo $index % 2 != 0 ? '' : 'odd'; ?>">
-												<?php foreach($post['files'] as $file) : ?>
-												<a href="<?php echo site_url() . '/download/' . $file->file_path; ?>">
-													<div class="col-xs-8 col-sm-8">
-														<p class="file-name">- <?php echo $file->file_name; ?></p>
-													</div>
-													<div class="hidden-xs col-sm-2">
-														<strong><?php echo human_filesize($file->file_size); ?></strong>
-													</div>
-													<div class="col-xs-4 col-sm-2">
-														<p><?php echo date('m/d/Y', strtotime($file->file_date)); ?></p>
-													</div>
-												</a>
+
+												<?php foreach($project_items as $key => $item) : ?>
+
+													<?php if(is_array($item)) : ?>
+
+														<div class="panel-group subfolder" id="<?php echo $index.'_'.$key; ?>" role="tablist" aria-multiselectable="true">
+															<div class="panel panel-default">
+																<div class="panel-heading" role="tab">
+																	<h4 class="panel-title">
+																		<a class="subitem collapsed" role="button" data-toggle="collapse" data-parent="#<?php echo $index.'_'.$key; ?>" href="#collapse<?php echo $index.'_'.$key; ?>">
+																			<div class="col-xs-8 col-sm-8">
+																				<img src="<?php bloginfo('template_url');?>/dist/images/folder-outline.svg"> - <?php echo $key; ?>
+																			</div>
+																			<div class="hidden-xs col-sm-2">
+																				<strong><?php echo human_filesize($item['size']); ?></strong>
+																			</div>
+																			<div class="col-xs-4 col-sm-2">
+																				<p><?php echo date('m/d/Y', strtotime($item['modified'])); ?></p>
+																			</div>
+																		</a>
+																	</h4>
+																</div>
+																<div id="collapse<?php echo $index.'_'.$key; ?>" class="panel-collapse collapse" role="tabpanel">
+																	<div class="panel-body">
+																	<?php foreach($item['files'] as $subitem) : ?>
+																		<a href="<?php echo site_url() . '/download/' . $subitem->file_path; ?>">
+																			<div class="col-xs-8 col-sm-8">
+																				<p class="file-name">- <?php echo $subitem->file_name; ?></p>
+																			</div>
+																			<div class="hidden-xs col-sm-2">
+																				<strong><?php echo human_filesize($subitem->file_size); ?></strong>
+																			</div>
+																			<div class="col-xs-4 col-sm-2">
+																				<p><?php echo date('m/d/Y', strtotime($subitem->file_date)); ?></p>
+																			</div>
+																		</a>
+																	<?php endforeach; ?>
+																	</div>
+																</div>
+															</div>
+														</div>
+
+													<?php else : ?>
+
+													<a href="<?php echo site_url() . '/download/' . $item->file_path; ?>">
+														<div class="col-xs-8 col-sm-8">
+															<p class="file-name">- <?php echo $item->file_name; ?></p>
+														</div>
+														<div class="hidden-xs col-sm-2">
+															<strong><?php echo human_filesize($item->file_size); ?></strong>
+														</div>
+														<div class="col-xs-4 col-sm-2">
+															<p><?php echo date('m/d/Y', strtotime($item->file_date)); ?></p>
+														</div>
+													</a>
+
+													<?php endif; ?>
+
 												<?php endforeach; ?>
+
 											</div>
+
 										</div>
+
 									</div>
+
 								</div>
+
 							</div>
 
 						<?php $index++; endforeach; ?>

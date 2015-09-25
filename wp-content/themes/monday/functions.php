@@ -166,31 +166,56 @@ function get_user_files($category = 0, $year = 0, $perpage = 10, $curr_page = 1)
   //echo('<pre>'.$wpdb->last_query.'</pre>');
 
   $sorted_files = [];
+  $meta_size = [];
+  $meta_modified = [];
 
   foreach ($files as $file) {
 
     // Get the Categories
     $categories = explode('/', $file->file_path);
-    $parent_folder_name = count($categories) === 1 ? 'uncategorized' : $categories[0];
 
-    $sorted_files[$parent_folder_name]['files'][] = $file;
+    //var_dump($categories);
 
-    // Get the total file size of all files
-    $sorted_files[$parent_folder_name]['size'] =
-      array_key_exists('size', $sorted_files[$parent_folder_name]) ?
-      $sorted_files[$parent_folder_name]['size'] + intval($file->file_size) :
+    $parent_folder_name = count($categories) === 1 ? '-99' : $categories[0];
+    $parent_subfolder_name = count($categories) >= 3 ? $categories[1] : false;
+
+    //var_dump($parent_folder_name);
+    //var_dump($parent_subfolder_name);
+
+    if($parent_subfolder_name !== false) {
+
+      $sorted_files[$parent_folder_name][$parent_subfolder_name]['files'][] = $file;
+
+      // Get the total file size of all files
+      $sorted_files[$parent_folder_name][$parent_subfolder_name]['size'] =
+        array_key_exists('size', $sorted_files[$parent_folder_name][$parent_subfolder_name]) ?
+        $sorted_files[$parent_folder_name][$parent_subfolder_name]['size'] + intval($file->file_size) :
+        intval($file->file_size);
+
+      // Get the last time this project was modified
+      $sorted_files[$parent_folder_name][$parent_subfolder_name]['modified'] =
+        array_key_exists('modified', $sorted_files[$parent_folder_name][$parent_subfolder_name]) ?
+        ($sorted_files[$parent_folder_name][$parent_subfolder_name]['modified'] > $file->file_date ? $sorted_files[$parent_folder_name][$parent_subfolder_name]['modified'] : $file->file_date) :
+        $file->file_date;
+    } else {
+      $sorted_files[$parent_folder_name][] = $file;
+    }
+
+    $meta_size[$parent_folder_name] = array_key_exists($parent_folder_name, $meta_size) ?
+      $meta_size[$parent_folder_name] + intval($file->file_size) :
       intval($file->file_size);
 
-    // Get the last time this project was modified
-    $sorted_files[$parent_folder_name]['modified'] =
-      array_key_exists('modified', $sorted_files[$parent_folder_name]) ?
-      ($sorted_files[$parent_folder_name]['modified'] > $file->file_date ? $sorted_files[$parent_folder_name]['modified'] : $file->file_date) :
+    $meta_modified[$parent_folder_name] = array_key_exists($parent_folder_name, $meta_modified) ?
+      ($meta_modified[$parent_folder_name] > $file->file_date ? $meta_modified[$parent_folder_name] : $file->file_date) :
       $file->file_date;
+
   }
 
   $result = [
     'total' => count($sorted_files),
-    'files' => array_slice($sorted_files, ($curr_page - 1) * $perpage, $perpage, true)
+    'files' => array_slice($sorted_files, ($curr_page - 1) * $perpage, $perpage, true),
+    'meta_size' => $meta_size,
+    'meta_modified' => $meta_modified
   ];
 
   return $result;
@@ -201,7 +226,7 @@ function get_user_files($category = 0, $year = 0, $perpage = 10, $curr_page = 1)
  */
 function fb_filter_query($query, $error = true) {
 
-  if(is_search()) {
+  if(!is_admin() && is_search()) {
     $query->is_search = false;
     $query->query_vars['s'] = false;
     $query->query['s'] = false;
@@ -215,3 +240,20 @@ function fb_filter_query($query, $error = true) {
 
 add_action('parse_query', 'fb_filter_query');
 add_filter('get_search_form', create_function('$a', "return null;"));
+
+/**
+ * Remove access to the author pages
+ */
+function remove_author_pages_page() {
+  if(is_author()) {
+    wp_redirect(home_url());
+    exit;
+  }
+}
+
+function remove_author_pages_link( $content ) {
+  return get_option('home');
+}
+
+add_action( 'template_redirect', 'remove_author_pages_page' );
+add_filter( 'author_link', 'remove_author_pages_link' );
