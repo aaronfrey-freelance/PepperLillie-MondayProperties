@@ -170,13 +170,13 @@
 
 													<?php if(is_array($item)) : ?>
 
-														<div class="panel-group subfolder" id="<?php echo $index.'_'.$key; ?>" role="tablist" aria-multiselectable="true">
+														<div class="panel-group subfolder" id="<?php echo $index.'_'.preg_replace('/\s+/', '', $key); ?>" role="tablist" aria-multiselectable="true">
 															<div class="panel panel-default">
 																<div class="panel-heading" role="tab">
 																	<h4 class="panel-title">
-																		<a class="subitem collapsed" role="button" data-toggle="collapse" data-parent="#<?php echo $index.'_'.$key; ?>" href="#collapse<?php echo $index.'_'.$key; ?>">
+																		<a class="subitem collapsed" role="button" data-toggle="collapse" data-parent="#<?php echo $index.'_'.preg_replace('/\s+/', '', $key); ?>" href="#collapse<?php echo $index.'_'.preg_replace('/\s+/', '', $key); ?>">
 																			<div class="col-xs-8 col-sm-8">
-																				<img src="<?php bloginfo('template_url');?>/dist/images/folder-outline.svg"> - <?php echo $key; ?>
+																				<img src="<?php bloginfo('template_url');?>/dist/images/folder-outline.svg"> - <?php echo ucwords($key); ?>
 																			</div>
 																			<div class="hidden-xs col-sm-2">
 																				<strong><?php echo human_filesize($item['size']); ?></strong>
@@ -187,7 +187,7 @@
 																		</a>
 																	</h4>
 																</div>
-																<div id="collapse<?php echo $index.'_'.$key; ?>" class="panel-collapse collapse" role="tabpanel">
+																<div id="collapse<?php echo $index.'_'.preg_replace('/\s+/', '', $key); ?>" class="panel-collapse collapse" role="tabpanel">
 																	<div class="panel-body">
 																	<?php foreach($item['files'] as $subitem) : ?>
 																		<a href="<?php echo site_url() . '/download/' . $subitem->file_path; ?>">
