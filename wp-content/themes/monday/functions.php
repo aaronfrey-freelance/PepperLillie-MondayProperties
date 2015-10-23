@@ -159,7 +159,6 @@ function get_user_files($category = 0, $year = 0, $perpage = 10, $curr_page = 1)
     WHERE (find_in_set('_u_$current_user->user_login', REPLACE(file_user_roles,'|',',')) <> 0 OR file_user_roles = '' $roles_where)
     $year_where
     ORDER BY
-      wp_wpfb_files.file_path ASC,
       wp_wpfb_files.file_date ASC", 
   OBJECT);
 
@@ -174,13 +173,8 @@ function get_user_files($category = 0, $year = 0, $perpage = 10, $curr_page = 1)
     // Get the Categories
     $categories = explode('/', $file->file_path);
 
-    //var_dump($categories);
-
     $parent_folder_name = count($categories) === 1 ? '-99' : $categories[0];
     $parent_subfolder_name = count($categories) >= 3 ? $categories[1] : false;
-
-    //var_dump($parent_folder_name);
-    //var_dump($parent_subfolder_name);
 
     if($parent_subfolder_name !== false) {
 
@@ -209,6 +203,14 @@ function get_user_files($category = 0, $year = 0, $perpage = 10, $curr_page = 1)
       ($meta_modified[$parent_folder_name] > $file->file_date ? $meta_modified[$parent_folder_name] : $file->file_date) :
       $file->file_date;
 
+  }
+
+  // Sort the folders
+  ksort($sorted_files);
+
+  foreach ($sorted_files as $k => $a) {
+    ksort($a, SORT_STRING);
+    $sorted_files[$k] = $a;
   }
 
   $result = [
