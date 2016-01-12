@@ -30,10 +30,6 @@
 		"75" => "75 Results per page"
 	];
 
-	// var_dump($category);
-	// var_dump($year);
-	// var_dump($perpage);
-
 	if($curr_page != 0) {
 		$arr_params = array('filepage' => $curr_page);
 		$new_query = add_query_arg(['filepage' => $curr_page]);
@@ -48,8 +44,8 @@
 
 			<div class="col-md-12">
 
-				<h2><?php echo the_title(); ?></h2>
-
+				<h2 class="pull-left"><?php echo the_title(); ?></h2>
+				<a href="<?php echo site_url('download-report'); ?>" class="pull-right btn btn-default print-report">Download User Report</a>
 				<hr>
 
 				<h3>Document Library</h3>
