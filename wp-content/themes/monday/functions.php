@@ -316,8 +316,11 @@ function print_user_file_report() {
   foreach($file_report as $user_login => $user_files) {
     $objPHPExcel->getActiveSheet()->setCellValue('A' . $current_row, $user_login);
     $objPHPExcel->getActiveSheet()->setCellValue('B' . $current_row, $user_files['email']);
-    $objPHPExcel->getActiveSheet()->setCellValue('C' . $current_row, implode("\n", $user_files['files']));
-    $current_row = $current_row + 1;
+
+    foreach($user_files['files'] as $file) {
+      $objPHPExcel->getActiveSheet()->setCellValue('C' . $current_row, $file);
+      $current_row = $current_row + 1;
+    }
   }
 
   // Autosize column widths
@@ -333,7 +336,7 @@ function print_user_file_report() {
 
   // Redirect output to a client’s web browser (Excel5)
   header('Content-Type: application/vnd.ms-excel');
-  header('Content-Disposition: attachment;filename="01simple.xls"');
+  header('Content-Disposition: attachment;filename="user-file-report.xls"');
   header('Cache-Control: max-age=0');
   // If you're serving to IE 9, then the following may be needed
   header('Cache-Control: max-age=1');
