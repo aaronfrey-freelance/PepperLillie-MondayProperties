@@ -264,6 +264,14 @@ function admin_menu_new_items() {
     $submenu['index.php'][500] = array( 'Menu item name', 'manage_options' , 'http://example.com' ); 
 }
 
+add_action('admin_menu', 'example_admin_menu');
+ 
+function example_admin_menu() {
+    global $submenu;
+    $url = site_url('download-report');
+    $submenu['tools.php'][] = array('Download File Report', 'manage_options', $url);
+}
+
 function print_user_file_report() {
 
   global $wpdb;

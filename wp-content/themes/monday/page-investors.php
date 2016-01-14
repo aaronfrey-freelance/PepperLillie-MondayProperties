@@ -45,7 +45,6 @@
 			<div class="col-md-12">
 
 				<h2 class="pull-left"><?php echo the_title(); ?></h2>
-				<a href="<?php echo site_url('download-report'); ?>" class="pull-right btn btn-default print-report">Download User Report</a>
 				<hr>
 
 				<h3>Document Library</h3>
