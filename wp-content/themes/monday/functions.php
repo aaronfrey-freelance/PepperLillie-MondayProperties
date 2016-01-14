@@ -271,10 +271,10 @@ function print_user_file_report() {
   $current_user_login = '';
 
   $files = $wpdb->get_results(
-    "SELECT wp_users.user_login, wp_users.user_email, wp_wpfb_files.file_name
+    "SELECT wp_users.user_login, wp_users.user_email, wp_wpfb_files.file_path
     FROM wp_users
     JOIN wp_wpfb_files ON wp_wpfb_files.file_user_roles LIKE CONCAT('%', wp_users.user_login, '|', '%')
-    ORDER BY user_login, wp_wpfb_files.file_name");
+    ORDER BY user_login, wp_wpfb_files.file_path");
 
   foreach($files as $file) {
     
@@ -285,9 +285,12 @@ function print_user_file_report() {
       ];
     }
 
-    $file_report[$file->user_login]['files'][] = $file->file_name;
+    $file_path_parts = explode('/', $file->file_path);
+    $file_report[$file->user_login]['files'][$file_path_parts[0]][$file_path_parts[1]][] = $file_path_parts[2];
     $current_user_login = $file->user_login;
   }
+
+  //var_dump($file_report);
 
   /** Error reporting */
   error_reporting(E_ALL);
@@ -310,16 +313,24 @@ function print_user_file_report() {
   $objPHPExcel->setActiveSheetIndex(0)
               ->setCellValue('A1', 'User Login')
               ->setCellValue('B1', 'User Email')
-              ->setCellValue('C1', 'Files');
+              ->setCellValue('C1', 'Parent Category')
+              ->setCellValue('D1', 'Sub Category')
+              ->setCellValue('E1', 'File Name');
 
   $current_row = 2;
   foreach($file_report as $user_login => $user_files) {
     $objPHPExcel->getActiveSheet()->setCellValue('A' . $current_row, $user_login);
     $objPHPExcel->getActiveSheet()->setCellValue('B' . $current_row, $user_files['email']);
 
-    foreach($user_files['files'] as $file) {
-      $objPHPExcel->getActiveSheet()->setCellValue('C' . $current_row, $file);
-      $current_row = $current_row + 1;
+    foreach($user_files['files'] as $parent_cat_name => $parent_cats) {
+      $objPHPExcel->getActiveSheet()->setCellValue('C' . $current_row, $parent_cat_name);
+      foreach($parent_cats as $sub_cat_name => $sub_cats) {
+        $objPHPExcel->getActiveSheet()->setCellValue('D' . $current_row, $sub_cat_name);
+        foreach($sub_cats as $file) {
+          $objPHPExcel->getActiveSheet()->setCellValue('E' . $current_row, $file);
+          $current_row = $current_row + 1;
+        }
+      }
     }
   }
 
@@ -327,6 +338,8 @@ function print_user_file_report() {
   $objPHPExcel->getActiveSheet()->getColumnDimension('A')->setAutoSize(true);
   $objPHPExcel->getActiveSheet()->getColumnDimension('B')->setAutoSize(true);
   $objPHPExcel->getActiveSheet()->getColumnDimension('C')->setAutoSize(true);
+  $objPHPExcel->getActiveSheet()->getColumnDimension('D')->setAutoSize(true);
+  $objPHPExcel->getActiveSheet()->getColumnDimension('E')->setAutoSize(true);
 
   // Rename worksheet
   $objPHPExcel->getActiveSheet()->setTitle('User File Permissions');
