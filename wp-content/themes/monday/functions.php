@@ -174,13 +174,8 @@ function get_user_files($category = 0, $year = 0, $perpage = 10, $curr_page = 1)
     // Get the Categories
     $categories = explode('/', $file->file_path);
 
-    //var_dump($categories);
-
     $parent_folder_name = count($categories) === 1 ? '-99' : $categories[0];
     $parent_subfolder_name = count($categories) >= 3 ? $categories[1] : false;
-
-    //var_dump($parent_folder_name);
-    //var_dump($parent_subfolder_name);
 
     if($parent_subfolder_name !== false) {
 
@@ -258,12 +253,6 @@ function remove_author_pages_link( $content ) {
 add_action( 'template_redirect', 'remove_author_pages_page' );
 add_filter( 'author_link', 'remove_author_pages_link' );
 
-add_action( 'admin_menu' , 'admin_menu_new_items' );
-function admin_menu_new_items() {
-    global $submenu;
-    $submenu['index.php'][500] = array( 'Menu item name', 'manage_options' , 'http://example.com' ); 
-}
-
 add_action('admin_menu', 'example_admin_menu');
  
 function example_admin_menu() {
@@ -297,8 +286,6 @@ function print_user_file_report() {
     $file_report[$file->user_login]['files'][$file_path_parts[0]][$file_path_parts[1]][] = $file_path_parts[2];
     $current_user_login = $file->user_login;
   }
-
-  //var_dump($file_report);
 
   /** Error reporting */
   error_reporting(E_ALL);
